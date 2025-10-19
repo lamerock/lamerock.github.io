@@ -1,0 +1,1765 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Engr. Gerard James B. Paglingayen — Portfolio</title>
+  <meta name="description" content="Portfolio of Engr. Gerard James B. Paglingayen — ICT Engineer, Trainer, and Data Protection Officer." />
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700&family=Orbitron:wght@500;700&display=swap" rel="stylesheet">
+  <script src="https://unpkg.com/lucide@latest"></script>
+  <style>
+    :root {
+      /* Professional palette: deeper, restrained accent */
+      --accent: #0b7285; /* deep teal */
+      --bg-dark: #07101a;
+      --bg-light: #0f1b26;
+      --text-main: #e6eef6;
+      /* slightly stronger card background for improved text contrast */
+      --card-bg: rgba(255, 255, 255, 0.14);
+      --border: rgba(255,255,255,0.06);
+      /* focus ring color used for :focus-visible (darker than white so it contrasts on bright accents) */
+      --focus-ring: rgba(3,18,23,0.95);
+    }
+
+    body {
+      background: radial-gradient(circle at top left, #0a132c, #050b19 85%);
+      color: var(--text-main);
+      font-family: 'Inter', sans-serif;
+      scroll-behavior: smooth;
+      overflow-x: hidden;
+    }
+
+    /* default nav offset for anchored scrolling; JS will update this dynamically */
+    :root { --nav-offset: 72px; }
+
+    h1, h2, h3, h5 {
+      font-family: 'Orbitron', sans-serif;
+      letter-spacing: 1px;
+    }
+
+    h2 {
+      color: var(--accent);
+      text-transform: uppercase;
+      position: relative;
+    }
+    h2::after {
+      content: '';
+      display: block;
+      width: 60px;
+      height: 3px;
+      margin: 10px auto;
+      background: var(--accent);
+      border-radius: 5px;
+    }
+
+    nav.navbar {
+      backdrop-filter: blur(20px);
+      background: rgba(5, 10, 25, 0.9) !important;
+      border-bottom: 1px solid var(--border);
+      box-shadow: 0 2px 10px rgba(0,0,0,0.4);
+    }
+
+    .navbar-brand span {
+      color: var(--accent);
+      font-weight: bold;
+    }
+
+    #progressBar {
+      position: fixed;
+      top: 0;
+      left: 0;
+      height: 4px;
+      background: linear-gradient(90deg, var(--accent), #38bdf8);
+      width: 0;
+      z-index: 1100;
+      transition: width 0.2s ease-out;
+    }
+
+    section {
+      min-height: 100vh;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      flex-direction: column;
+      text-align: center;
+      padding: 6rem 1rem;
+      opacity: 0;
+      transform: translateY(50px);
+      transition: all 1s ease-out;
+    }
+    section.visible {
+      opacity: 1;
+      transform: translateY(0);
+    }
+
+    .btn-accent {
+      background: linear-gradient(180deg, var(--accent), color-mix(in srgb, var(--accent) 85%, black 15%));
+      color: #ffffff;
+      font-weight: 600;
+      border-radius: 8px;
+      padding: 8px 18px;
+      transition: transform 0.18s ease, box-shadow 0.18s ease;
+      border: 1px solid rgba(255,255,255,0.06);
+    }
+    .btn-accent:hover {
+      transform: translateY(-2px);
+      box-shadow: 0 8px 18px rgba(11,114,133,0.12);
+    }
+
+    .card-custom {
+      background: var(--card-bg);
+      border: 1px solid var(--border);
+      border-radius: 12px;
+      color: var(--text-main);
+      transition: transform 0.18s ease, box-shadow 0.18s ease;
+      box-shadow: 0 6px 18px rgba(2,8,12,0.28);
+    }
+    .card-custom:hover {
+      transform: translateY(-6px);
+      box-shadow: 0 12px 30px rgba(2,8,12,0.36);
+    }
+
+    .training-logo { display:none; }
+
+    #hero {
+      position: relative;
+      background: linear-gradient(135deg, rgba(11,114,133,0.06), rgba(6,20,28,0.02));
+      overflow: hidden;
+      padding-top: 5.5rem;
+      padding-bottom: 5.5rem;
+    }
+
+    #particleCanvas {
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      z-index: 0;
+      pointer-events: none;
+      opacity: 0.6;
+    }
+
+    #hero .container {
+      position: relative;
+      z-index: 1;
+    }
+
+    /* Role badges and contact chips in hero */
+    .role-badge{background:rgba(255,255,255,0.04);color:var(--text-main);padding:6px 10px;border-radius:999px;font-weight:600;font-size:0.86rem}
+  .role-accent{background:linear-gradient(90deg,var(--accent), color-mix(in srgb, var(--accent) 80%, black 10%));color:#fff;box-shadow:0 4px 18px rgba(3,18,23,0.12)}
+    .contact-chips .chip{display:inline-block;background:rgba(255,255,255,0.04);padding:8px 10px;border-radius:999px;color:var(--text-main);text-decoration:none;font-size:0.9rem}
+    .contact-chips .chip.muted{opacity:0.85}
+    .contact-chips .chip:hover{background:rgba(255,255,255,0.06)}
+
+    /* Make hero CTA spacing slightly denser on small screens */
+    @media (max-width:576px){
+      .lead.w-75{width:100% !important}
+      .contact-chips{flex-direction:column;align-items:center}
+      .contact-chips .chip{width:100%;text-align:center}
+      .d-flex.gap-2 .btn{width:100%}
+    }
+
+    a, p, li {
+      color: #e5e7eb;
+    }
+
+    a:hover {
+      color: var(--accent);
+    }
+
+    .icon-anim {
+      color: var(--accent);
+      width: 40px;
+      height: 40px;
+      margin-bottom: 10px;
+      opacity: 0.95;
+    }
+
+    @keyframes floatIcon {
+      0%, 100% { transform: scale(1); }
+      50% { transform: scale(1.03); }
+    }
+
+    footer {
+      background: rgba(0, 0, 0, 0.7);
+      border-top: 1px solid var(--border);
+      color: #cbd5e1;
+      font-size: 0.9rem;
+      padding: 2rem 0;
+    }
+    
+    .badge-duration { background: rgba(255,255,255,0.06); color: #e6f7fb; border-radius: 999px; padding: 4px 8px; font-size: 0.8rem; margin-left:8px; }
+    /* Make company and month/year metadata in Experience section lighter for readability */
+    #experience .card .small.text-muted {
+      color: #cbd5e1 !important;
+      opacity: 0.95;
+    }
+    /* stronger duration badge */
+    .badge-duration { background: var(--accent); color: #07121a !important; box-shadow: 0 4px 14px rgba(14,239,255,0.12); }
+  /* company name style inside Experience cards */
+  #experience .company-name { color: #e6eef8; font-weight:600; margin-top:0; font-size:0.95rem; }
+  /* meta row: company, dates, duration on same line */
+  .experience-meta { display:flex; gap:12px; align-items:center; margin-top:6px; flex-wrap:wrap; }
+  .experience-meta .small.text-muted { margin:0; }
+
+  /* Training card visual improvements */
+  .training-card { padding: 1rem; }
+  .training-card-meta { display:flex; flex-direction:column; gap:6px; color: rgba(255,255,255,0.88); }
+  /* Skill chips: use inline-flex so icons and text align; keep compact for scroll-row */
+  .skill-chip { display:inline-flex; align-items:center; gap:8px; background: rgba(255,255,255,0.03); color: #dff6fb; padding:6px 10px; border-radius:999px; font-size:0.78rem; margin-right:6px; margin-top:6px; }
+  .skill-chip .skill-icon{width:16px;height:16px;display:inline-block;flex:0 0 16px}
+  .skill-chip .skill-lucide{width:16px;height:16px;display:inline-flex;align-items:center;justify-content:center}
+  .training-card-footer { display:flex; justify-content:space-between; align-items:center; margin-top:10px; }
+  .card-actions { display:flex; gap:8px; }
+  /* Ensure small muted text inside the hero CV card is readable against the card background */
+  #hero .card .small.text-muted { color: rgba(230,247,251,0.92) !important; }
+  /* ensure footer actions right-align when used */
+  .training-card-footer.just-right { justify-content:flex-end; }
+  .btn-outline-light { border-color: rgba(255,255,255,0.12); }
+  .btn-accent { background: linear-gradient(90deg,var(--accent),#38bdf8); color: #041218; }
+  /* Make card text slightly lighter in the Training section for better contrast */
+  #training .card { color: rgba(255,255,255,0.92); }
+  #training .card h5 { color: #e8f9fb; }
+  #training .card .small.text-muted { color: rgba(235,245,250,0.75) !important; }
+  /* Buttons are now placed in a footer using flexbox; remove absolute anchoring */
+  #training .card { position: static; }
+  #training .view-credential { position: static; }
+  </style>
+  <style>
+   /* Accessibility: focus-visible for keyboard users
+     Use a darker focus ring (not white) so outlines on bright accent backgrounds remain accessible. */
+   :focus{outline: none}
+   :focus-visible{outline:3px solid var(--focus-ring); outline-offset:3px; border-radius:6px}
+
+    /* Card footer divider */
+    .card .mt-auto { border-top: 1px solid rgba(255,255,255,0.04); margin-top:12px; padding-top:12px }
+
+    /* Make action buttons full width on small screens */
+    @media (max-width:576px){
+      .card .mt-auto .btn{width:100%;}
+      .card .mt-auto .btn + .btn{margin-top:8px;width:100%;}
+      .training-card-meta h5{font-size:1rem}
+    }
+
+    /* Skill chips: single-line row with horizontal scroll to avoid wrapping and snap into place */
+    .skill-row-wrap{position:relative}
+    .skill-row{display:flex;gap:8px;overflow:auto;white-space:nowrap;padding-bottom:4px;scroll-snap-type:x mandatory;-webkit-overflow-scrolling:touch}
+    .skill-row .skill-chip{flex:0 0 auto;scroll-snap-align:start}
+    /* chevron buttons to hint and control horizontal scroll */
+    .skill-scroll-btn{position:absolute;top:50%;transform:translateY(-50%);width:36px;height:36px;border-radius:999px;border:1px solid rgba(255,255,255,0.06);background:rgba(2,6,12,0.45);display:flex;align-items:center;justify-content:center;color:var(--text-main);cursor:pointer;z-index:5;transition:opacity .18s, transform .12s}
+    .skill-scroll-left{left:6px}
+    .skill-scroll-right{right:6px}
+    .skill-scroll-btn svg{width:18px;height:18px;stroke:var(--accent)}
+    .skill-scroll-btn[hidden]{opacity:0;pointer-events:none}
+
+    /* On larger screens, switch to a responsive grid instead of horizontal scroll */
+    @media (min-width: 900px) {
+      .skill-row{display:grid;grid-template-columns:repeat(auto-fill,minmax(160px,1fr));gap:8px;overflow:visible;white-space:normal;padding-bottom:0}
+      .skill-row .skill-chip{flex:none;margin-top:0;margin-right:0}
+      .skill-scroll-btn{display:none}
+    }
+
+    /* Avatar placeholder utility - replace the inner SVG with an <img src="your-photo.jpg"> when ready */
+    .avatar-placeholder img{width:100%;height:100%;object-fit:cover;border-radius:999px;display:block}
+    .avatar-wrapper { padding-right:6px; }
+    @media (min-width: 992px) { /* lg and up: align avatar to the right of the hero column */
+      .avatar-wrapper { justify-content:flex-end; }
+    }
+    /* Responsive avatar sizing: default small, medium on md, larger on lg */
+    .avatar-placeholder{width:64px;height:64px;display:flex;align-items:center;justify-content:center;border-radius:999px;background:linear-gradient(180deg,#0b1220,#0f2130);}
+    .avatar-placeholder .avatar-svg{width:36px;height:36px}
+    @media (min-width: 768px){
+      .avatar-placeholder{width:72px;height:72px}
+      .avatar-placeholder .avatar-svg{width:44px;height:44px}
+    }
+    @media (min-width: 992px){
+      .avatar-placeholder{width:96px;height:96px}
+      .avatar-placeholder .avatar-svg{width:56px;height:56px}
+    }
+
+    /* Improve contrast on small text inside cards */
+    #training .small.text-muted{opacity:0.92}
+  </style>
+</head>
+<body>
+  <!-- Skip link for keyboard users -->
+  <a href="#main" class="visually-hidden-focusable" style="position:fixed;left:8px;top:8px;z-index:2000;background:var(--accent);color:#041218;padding:8px 12px;border-radius:6px;display:inline-block;transform:translateY(-120%);transition:transform .2s;">Skip to content</a>
+  <script>
+    // reveal skip link on focus
+    const skip = document.querySelector('.visually-hidden-focusable');
+    skip.addEventListener('focus', () => skip.style.transform = 'translateY(0)');
+    skip.addEventListener('blur', () => skip.style.transform = 'translateY(-120%)');
+  </script>
+  <style>
+    /* Typing animation styles for hero */
+    #heroType { display:inline-block; white-space:pre-wrap; font-weight:600; }
+    .type-cursor { display:inline-block; width:2px; background:var(--accent); margin-left:6px; height:1.1em; vertical-align:middle; animation: blink 1s steps(1) infinite; }
+    @keyframes blink { 50% { opacity:0 } }
+    /* Slightly reduce the lead width on very small screens when typing anim is present */
+    @media (max-width:420px){ .lead.w-75{width:100% !important;font-size:0.95rem} }
+  </style>
+  <div id="progressBar"></div>
+  <nav class="navbar navbar-expand-lg navbar-dark fixed-top">
+    <div class="container">
+      <a class="navbar-brand fw-bold" href="#"><span>GJ</span> Paglingayen</a>
+      <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav"><span class="navbar-toggler-icon"></span></button>
+      <div class="collapse navbar-collapse justify-content-end" id="navbarNav">
+  <ul class="navbar-nav gap-3">
+          <li class="nav-item"><a class="nav-link text-light" href="#hero">Home</a></li>
+          <li class="nav-item"><a class="nav-link text-light" href="#about">About</a></li>
+          <li class="nav-item"><a class="nav-link text-light" href="#experience">Experience</a></li>
+          <li class="nav-item"><a class="nav-link text-light" href="#training">Training</a></li>
+          <li class="nav-item"><a class="nav-link text-light" href="#projects">Projects</a></li>
+          <li class="nav-item"><a class="nav-link text-light" href="#awards">Awards</a></li>
+          <li class="nav-item d-flex align-items-center">
+            <a class="btn btn-outline-light btn-sm me-2" href="Gerard.James.Paglingayen_CV_DICT_2021.pdf" target="_blank" rel="noopener" download aria-label="Download CV">Download CV</a>
+            <a class="btn btn-accent" href="#contact">Contact</a>
+          </li>
+        </ul>
+      </div>
+    </div>
+  </nav>
+
+  <main id="main">
+  <section id="hero">
+    <canvas id="particleCanvas"></canvas>
+    <div class="container">
+      <div class="row align-items-center">
+        <div class="col-lg-8 text-center text-lg-start">
+          <i data-lucide="cpu" class="icon-anim"></i>
+          <h1 class="display-5 fw-bold mb-3">Gerard James B. Paglingayen</h1>
+          <div class="d-flex gap-2 justify-content-center justify-content-lg-start mb-3">
+            <span class="role-badge role-accent">Computer Engineer</span>
+            <span class="role-badge">DICT Trainer</span>
+            <span class="role-badge">Data Protection Officer</span>
+          </div>
+          <p class="lead w-75 mx-auto mx-lg-0">
+            <span id="heroType" aria-hidden="true"></span>
+            <span class="type-cursor" aria-hidden="true"></span>
+            <span class="visually-hidden" id="heroTypeText">Developer | IoT &amp; Embedded Systems Enthusiast. Instructor | DICT Trainer | Data Protection Advocate.</span>
+          </p>
+          <div class="d-flex gap-2 mt-3 justify-content-center justify-content-lg-start" aria-label="Social links">
+            <a href="https://facebook.com/yourprofile" class="btn btn-outline-light btn-sm" target="_blank" rel="noopener" aria-label="Facebook">
+              <i data-lucide="facebook"></i>
+            </a>
+            <a href="https://linkedin.com/in/yourprofile" class="btn btn-outline-light btn-sm" target="_blank" rel="noopener" aria-label="LinkedIn">
+              <i data-lucide="linkedin"></i>
+            </a>
+            <a href="https://youtube.com/channel/yourchannel" class="btn btn-outline-light btn-sm" target="_blank" rel="noopener" aria-label="YouTube">
+              <i data-lucide="youtube"></i>
+            </a>
+            <a href="https://github.com/yourprofile" class="btn btn-outline-light btn-sm" target="_blank" rel="noopener" aria-label="GitHub">
+              <i data-lucide="github"></i>
+            </a>
+          </div>
+        </div>
+        <div class="col-lg-4 mt-4 mt-lg-0 d-flex justify-content-center justify-content-lg-end">
+          <div style="max-width:320px; width:100%;">
+            <div class="card card-custom p-3 text-start d-flex flex-column align-items-center" style="width:100%;">
+              <div class="mb-3 d-flex justify-content-center" aria-hidden="true">
+                <div class="avatar-placeholder" aria-hidden="true">
+                  <img src="assets/gjp-photo.png" alt="Gerard James Paglingayen">
+                </div>
+              </div>
+              <div class="d-flex align-items-center gap-3" style="width:100%">
+                <div class="pdf-thumb" aria-hidden="true" style="width:56px;height:72px;display:flex;align-items:center;justify-content:center;border-radius:8px;background:linear-gradient(180deg,#fff,#e6f9ff);">
+                  <svg width="28" height="36" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg" role="img" aria-hidden="true"><title>CV thumbnail</title><path d="M6 2h7l5 5v13a2 2 0 0 1-2 2H6a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2z" stroke="#08313c" stroke-width="1.2" stroke-linejoin="round"/><path d="M13 2v6h6" stroke="#056b7a" stroke-width="1.2" stroke-linejoin="round"/></svg>
+                </div>
+                <div style="flex:1;min-width:0;">
+                  <h6 class="mb-1">Curriculum Vitae</h6>
+                  <div class="d-flex gap-2">
+                    <button type="button" class="btn btn-sm btn-outline-light view-cert" data-cert="Gerard.James.Paglingayen_CV_DICT_2021.pdf" aria-expanded="false" id="cvPreviewBtn">Preview</button>
+                    <a class="btn btn-sm btn-accent" href="Gerard.James.Paglingayen_CV_DICT_2021.pdf" target="_blank" rel="noopener" download>Download</a>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <script>
+    (function(){
+      const form = document.getElementById('contactForm');
+      if (!form) return;
+      const feedback = document.getElementById('contactFeedback');
+      const submitBtn = document.getElementById('cf-submit');
+      const msgEl = document.getElementById('cf-message');
+      const msgCount = document.getElementById('cf-msg-count');
+
+      // basic RFC 5322-ish email regexp (lenient but prevents obvious invalids)
+      const emailRe = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+
+      // Toast elements (Bootstrap)
+      const toastEl = document.getElementById('contactToast');
+      const toastBodyEl = toastEl ? toastEl.querySelector('.toast-body') : null;
+      const toastInstance = (toastEl && window.bootstrap) ? new bootstrap.Toast(toastEl) : null;
+
+      function showFeedback(message, type='success'){
+        // Prefer a toast for transient feedback
+        if (toastEl && toastBodyEl && toastInstance){
+          toastBodyEl.textContent = message;
+          // swap contextual background classes
+          toastEl.classList.remove('text-bg-success','text-bg-danger');
+          toastEl.classList.add(type === 'success' ? 'text-bg-success' : 'text-bg-danger');
+          toastInstance.show();
+          // also update an offscreen live region for screen readers
+          if (feedback){
+            feedback.style.display = 'block';
+            feedback.className = '';
+            feedback.textContent = message;
+            setTimeout(()=>{ feedback.style.display = 'none'; feedback.textContent = ''; }, 1600);
+          }
+          return;
+        }
+        // Fallback to inline alert if toast not available
+        if (feedback) {
+          feedback.style.display = 'block';
+          feedback.className = '';
+          feedback.classList.add('alert', type === 'success' ? 'alert-success' : 'alert-danger');
+          feedback.textContent = message;
+          feedback.setAttribute('tabindex', '-1');
+          feedback.focus();
+        }
+      }
+
+      function clearFeedback(){
+        if (feedback){ feedback.style.display = 'none'; feedback.className = ''; feedback.textContent = ''; feedback.removeAttribute('tabindex'); }
+        if (toastInstance){ try { toastInstance.hide(); } catch(e){} }
+      }
+
+      // message counter
+      if (msgEl && msgCount) {
+        const max = parseInt(msgEl.getAttribute('maxlength') || '2000', 10);
+        function updateCount(){ msgCount.textContent = Math.min(msgEl.value.length, max); }
+        msgEl.addEventListener('input', updateCount);
+        // initialize
+        updateCount();
+      }
+
+      form.addEventListener('submit', function(e){
+        e.preventDefault();
+        clearFeedback();
+
+        // basic HTML5 validation
+        if (!form.checkValidity()){
+          form.reportValidity();
+          return;
+        }
+
+        // stricter email check
+        const email = form.querySelector('[name="email"]').value.trim();
+        if (!emailRe.test(email)){
+          showFeedback('Please enter a valid email address.', 'error');
+          form.querySelector('[name="email"]').focus();
+          return;
+        }
+
+        // honeypot check - if filled, silently abort
+        const hp = form.querySelector('[name="website"]');
+        if (hp && hp.value.trim() !== ''){
+          showFeedback('Message sent. Thank you!', 'success');
+          form.reset();
+          return;
+        }
+
+        // gather data
+        const name = form.querySelector('[name="name"]').value.trim();
+        const subject = form.querySelector('[name="subject"]').value.trim() || 'Contact from portfolio';
+        const message = form.querySelector('[name="message"]').value.trim();
+
+        // character limits enforcement (defensive)
+        if (name.length > 100) { showFeedback('Name is too long (max 100 chars).', 'error'); return; }
+        if (subject.length > 120) { showFeedback('Subject is too long (max 120 chars).', 'error'); return; }
+        if (message.length > 2000) { showFeedback('Message is too long (max 2000 chars).', 'error'); return; }
+
+        // prepare mailto fallback
+        const body = encodeURIComponent(`Name: ${name}\nEmail: ${email}\n\n${message}`);
+        const mailto = `mailto:gerard.paglingayen@gmail.com?subject=${encodeURIComponent(subject)}&body=${body}`;
+
+        try {
+          submitBtn.disabled = true;
+          submitBtn.textContent = 'Opening mail…';
+          window.location.href = mailto;
+          setTimeout(()=>{
+            showFeedback('Your email client should have opened. If not, please email gerard.paglingayen@gmail.com directly.', 'success');
+            submitBtn.disabled = false;
+            submitBtn.textContent = 'Send message';
+            form.reset();
+            if (msgEl && msgCount) msgCount.textContent = '0';
+          }, 900);
+        } catch (err) {
+          console.error('Mailto fallback failed', err);
+          showFeedback('Unable to open email client. Please email gerard.paglingayen@gmail.com directly.', 'error');
+          submitBtn.disabled = false;
+          submitBtn.textContent = 'Send message';
+        }
+      });
+
+      // Reset handler clears feedback
+      form.addEventListener('reset', function(){ setTimeout(()=>{ clearFeedback(); if (msgEl && msgCount) msgCount.textContent = '0'; }, 80); });
+    })();
+  </script>
+
+
+<section id="about">
+    <div class="container text-center">
+      <h2>About Me</h2>
+      <p class="w-75 mx-auto">I’m an educator, developer, and cybersecurity advocate passionate about technology, privacy, and innovation. With more than a decade of experience in academia, IT management, and national ICT training, I aim to bridge deep technical knowledge and practical application — from code to classroom.</p>
+
+      <div class="row justify-content-center mt-4">
+        <div class="col-md-6 text-start">
+          <h5>Tech Stack &amp; Tools</h5>
+          <div class="skill-row-wrap mb-3">
+            <button class="skill-scroll-btn skill-scroll-left" type="button" aria-label="Scroll skills left">
+              <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><polyline points="15 18 9 12 15 6"></polyline></svg>
+            </button>
+              <div class="skill-row" role="list" aria-label="Skills">
+                <span class="skill-chip" role="listitem"><img class="skill-icon" src="https://cdn.simpleicons.org/c" alt="" aria-hidden="true">C</span>
+                <span class="skill-chip" role="listitem"><img class="skill-icon" src="https://cdn.simpleicons.org/cplusplus" alt="" aria-hidden="true">C++</span>
+                <span class="skill-chip" role="listitem"><img class="skill-icon" src="https://cdn.simpleicons.org/python/3776AB" alt="" aria-hidden="true">Python</span>
+                <span class="skill-chip" role="listitem"><img class="skill-icon" src="https://cdn.simpleicons.org/php/777BB4" alt="" aria-hidden="true">PHP</span>
+                <span class="skill-chip" role="listitem"><img class="skill-icon" src="https://cdn.simpleicons.org/javascript/F7DF1E" alt="" aria-hidden="true">JavaScript</span>
+                <span class="skill-chip" role="listitem"><img class="skill-icon" src="https://cdn.simpleicons.org/wordpress/21759B" alt="" aria-hidden="true">WordPress</span>
+                <span class="skill-chip" role="listitem"><img class="skill-icon" src="https://cdn.simpleicons.org/node.js/43853D" alt="" aria-hidden="true">Node.js</span>
+                <span class="skill-chip" role="listitem"><img class="skill-icon" src="https://cdn.simpleicons.org/arduino/00979D" alt="" aria-hidden="true">Arduino</span>
+                <span class="skill-chip" role="listitem"><img class="skill-icon" src="https://cdn.simpleicons.org/linux/FCC624" alt="" aria-hidden="true">Linux</span>
+                <span class="skill-chip" role="listitem"><img class="skill-icon" src="https://cdn.simpleicons.org/kalilinux/FF0000" alt="" aria-hidden="true">Kali</span>
+                <span class="skill-chip" role="listitem"><img class="skill-icon" src="https://cdn.simpleicons.org/git/F05032" alt="" aria-hidden="true">Git</span>
+                <span class="skill-chip" role="listitem"><img class="skill-icon" src="https://cdn.simpleicons.org/VSCodium" alt="" aria-hidden="true">VS Code</span>
+                <span class="skill-chip" role="listitem"><img class="skill-icon" src="https://cdn.simpleicons.org/bootstrap/7952B3" alt="" aria-hidden="true">Bootstrap</span>
+                <span class="skill-chip" role="listitem"><img class="skill-icon" src="https://cdn.simpleicons.org/mysql/4479A1" alt="" aria-hidden="true">MySQL</span>
+              </div>
+            <button class="skill-scroll-btn skill-scroll-right" type="button" aria-label="Scroll skills right">
+              <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><polyline points="9 18 15 12 9 6"></polyline></svg>
+            </button>
+          </div>
+        </div>
+        <div class="col-md-6 text-start">
+          <h5>Focus Areas</h5>
+          <ul>
+            <li>Embedded Systems</li>
+            <li>Internet of Things (IoT)</li>
+            <li>Reverse Engineering</li>
+            <li>Web Development (PHP, WordPress)</li>
+            <li>Data Privacy &amp; Information Security</li>
+            <li>Deep Learning Applications</li>
+          </ul>
+        </div>
+      </div>
+   
+    </div>
+  </section>
+      </div>
+    </div>
+  </section>
+
+  <section id="experience">
+    <div class="container text-center">
+      <h2>Experience</h2>
+  <div class="row gy-4 align-items-stretch">
+        <!-- Instructor -->
+        <div class="col-md-6">
+          <div class="card card-custom p-3 text-start h-100 d-flex flex-column" data-start="2009-07" data-end="present">
+            <div>
+              <h5 class="mb-1">Instructor</h5>
+              <div class="experience-meta d-flex align-items-center justify-content-between">
+                <div class="d-flex align-items-center gap-2 small text-muted">
+                  <span class="company-name">University of Antique</span>
+                  <span><i data-lucide="calendar" style="width:14px;height:14px;vertical-align:middle;margin-right:6px"></i> Jul 2009 – Present</span>
+                </div>
+                <span class="badge-duration">10 yrs 5 mos</span>
+              </div>
+              <p class="mt-2">Designs and delivers programming and web-technology courses; develops industry-aligned curriculum, mentors capstone projects, and runs DICT-accredited hands-on workshops.</p>
+            </div>
+            <template id="details-instructor">
+              <div class="card card-body bg-transparent border-0 p-0 text-muted">
+                <ul>
+                  <li>Teach undergraduate and graduate courses: Programming, Web Development, Data Structures, and Systems Design.</li>
+                  <li>Develop and revise curriculum and course materials to align with industry standards and accreditation requirements.</li>
+                  <li>Mentor and supervise capstone and research projects; advise student teams on practical implementations.</li>
+                  <li>Organize and deliver hands-on workshops (DICT-accredited) on Python, web technologies, and digital governance.</li>
+                  <li>Collaborate with departments on learning outcomes, assessment, and academic quality improvements.</li>
+                </ul>
+              </div>
+            </template>
+            <div class="mt-auto p-2 d-flex justify-content-start">
+              <button class="btn btn-sm btn-outline-light detail-btn" type="button" data-detail="details-instructor" aria-expanded="false" aria-controls="expDetailModal">Details</button>
+            </div>
+          </div>
+        </div>
+
+        <!-- Data Protection Officer -->
+        <div class="col-md-6">
+          <div class="card card-custom p-3 text-start h-100 d-flex flex-column" data-start="2019-06" data-end="present">
+            <div>
+              <h5 class="mb-1">Data Protection Officer</h5>
+              <div class="experience-meta d-flex align-items-center justify-content-between">
+                <div class="d-flex align-items-center gap-2 small text-muted">
+                  <span class="company-name">University of Antique</span>
+                  <span><i data-lucide="calendar" style="width:14px;height:14px;vertical-align:middle;margin-right:6px"></i> Jun 2019 – Present</span>
+                </div>
+                <span class="badge-duration">2 yrs 9 mos</span>
+              </div>
+              <p class="mt-2">Led the campus data privacy program: implemented policies, ran Privacy Impact Assessments, managed breach response, and trained staff on NPC-compliant data handling.</p>
+            </div>
+            <template id="details-dpo">
+              <div class="card card-body bg-transparent border-0 p-0 text-muted">
+                <ul>
+                  <li>Developed and maintained institutional data privacy policies and procedures in line with National Privacy Commission (NPC) guidance.</li>
+                  <li>Conducted Privacy Impact Assessments (PIAs) and helped units remediate identified risks.</li>
+                  <li>Established incident reporting workflows and coordinated breach response and notifications.</li>
+                  <li>Delivered staff training on data handling, retention, and lawful processing requirements.</li>
+                  <li>Maintained records of processing activities and supported compliance reporting.</li>
+                </ul>
+              </div>
+            </template>
+            <div class="mt-auto p-2 d-flex justify-content-start">
+              <button class="btn btn-sm btn-outline-light detail-btn" type="button" data-detail="details-dpo" aria-expanded="false" aria-controls="expDetailModal">Details</button>
+            </div>
+          </div>
+        </div>
+
+        <!-- Director, Management Information Systems -->
+        <div class="col-md-6">
+          <div class="card card-custom p-3 text-start h-100 d-flex flex-column" data-start="2018-05" data-end="2019-02">
+            <div>
+              <h5 class="mb-1">Director, Management Information Systems</h5>
+              <div class="experience-meta d-flex align-items-center justify-content-between">
+                <div class="d-flex align-items-center gap-2 small text-muted">
+                  <span class="company-name">University of Antique</span>
+                  <span><i data-lucide="calendar" style="width:14px;height:14px;vertical-align:middle;margin-right:6px"></i> May 2018 – Feb 2019</span>
+                </div>
+                <span class="badge-duration">10 mos</span>
+              </div>
+              <p class="mt-2">Directed MIS modernization efforts—automated institutional reporting, improved student information systems, and led cross-functional IT projects to increase operational efficiency.</p>
+            </div>
+            <template id="details-mis">
+              <div class="card card-body bg-transparent border-0 p-0 text-muted">
+                <ul>
+                  <li>Defined MIS strategy and roadmaps to modernize student records and administrative systems.</li>
+                  <li>Implemented reporting automation for enrollment, performance, and compliance metrics.</li>
+                  <li>Managed vendor relationships, system procurements, and upgrades.</li>
+                  <li>Coordinated cross-functional IT projects and supervised MIS staff.</li>
+                </ul>
+              </div>
+            </template>
+            <div class="mt-auto p-2 d-flex justify-content-start">
+              <button class="btn btn-sm btn-outline-light detail-btn" type="button" data-detail="details-mis" aria-expanded="false" aria-controls="expDetailModal">Details</button>
+            </div>
+          </div>
+        </div>
+
+        <!-- Director, Institutional Planning and Development -->
+        <div class="col-md-6">
+          <div class="card card-custom p-3 text-start h-100 d-flex flex-column" data-start="2018-05" data-end="2019-02">
+            <div>
+              <h5 class="mb-1">Director, Institutional Planning & Development</h5>
+              <div class="experience-meta d-flex align-items-center justify-content-between">
+                <div class="d-flex align-items-center gap-2 small text-muted">
+                  <span class="company-name">University of Antique</span>
+                  <span><i data-lucide="calendar" style="width:14px;height:14px;vertical-align:middle;margin-right:6px"></i> May 2018 – Feb 2019</span>
+                </div>
+                <span class="badge-duration">10 mos</span>
+              </div>
+              <p class="mt-2">Led strategic institutional planning and KPI development to improve program quality and align resources with institutional priorities.</p>
+            </div>
+            <template id="details-ipd">
+              <div class="card card-body bg-transparent border-0 p-0 text-muted">
+                <ul>
+                  <li>Led institutional planning activities and developed strategic plans and KPIs.</li>
+                  <li>Supported program accreditation and improvement through data-driven planning.</li>
+                  <li>Prepared institutional reports and proposals for funding and partnerships.</li>
+                </ul>
+              </div>
+            </template>
+            <div class="mt-auto p-2 d-flex justify-content-start">
+              <button class="btn btn-sm btn-outline-light detail-btn" type="button" data-detail="details-ipd" aria-expanded="false" aria-controls="expDetailModal">Details</button>
+            </div>
+          </div>
+        </div>
+
+        <!-- OIC-Director, MIS -->
+        <div class="col-md-6">
+          <div class="card card-custom p-3 text-start h-100 d-flex flex-column" data-start="2017-08" data-end="2018-03">
+            <div>
+              <h5 class="mb-1">OIC-Director, Management Information Systems</h5>
+              <div class="experience-meta d-flex align-items-center justify-content-between">
+                <div class="d-flex align-items-center gap-2 small text-muted">
+                  <span class="company-name">University of Antique</span>
+                  <span><i data-lucide="calendar" style="width:14px;height:14px;vertical-align:middle;margin-right:6px"></i> Aug 2017 – Mar 2018</span>
+                </div>
+                <span class="badge-duration">8 mos</span>
+              </div>
+              <p class="mt-2">Provided interim MIS leadership to ensure system availability, respond to incidents, and coordinate IT operations and support teams.</p>
+            </div>
+            <template id="details-oicmis">
+              <div class="card card-body bg-transparent border-0 p-0 text-muted">
+                <ul>
+                  <li>Provided operational leadership for MIS during interim assignment.</li>
+                  <li>Maintained service continuity, backups, and disaster recovery plans.</li>
+                  <li>Coordinated support teams and escalations for critical incidents.</li>
+                </ul>
+              </div>
+            </template>
+            <div class="mt-auto p-2 d-flex justify-content-start">
+              <button class="btn btn-sm btn-outline-light detail-btn" type="button" data-detail="details-oicmis" aria-expanded="false" aria-controls="expDetailModal">Details</button>
+            </div>
+          </div>
+        </div>
+
+        <!-- Web Administrator -->
+        <div class="col-md-6">
+          <div class="card card-custom p-3 text-start h-100 d-flex flex-column" data-start="2013-06" data-end="2018-03">
+            <div>
+              <h5 class="mb-1">Web Administrator</h5>
+              <div class="experience-meta d-flex align-items-center justify-content-between">
+                <div class="d-flex align-items-center gap-2 small text-muted">
+                  <span class="company-name">University of Antique</span>
+                  <span><i data-lucide="calendar" style="width:14px;height:14px;vertical-align:middle;margin-right:6px"></i> Jun 2013 – Mar 2018</span>
+                </div>
+                <span class="badge-duration">4 yrs 10 mos</span>
+              </div>
+              <p class="mt-2">Maintained the university web portfolio—implemented secure WordPress templates, performed updates and hardening, and trained editors on content workflows.</p>
+            </div>
+            <template id="details-web">
+              <div class="card card-body bg-transparent border-0 p-0 text-muted">
+                <ul>
+                  <li>Maintained and updated institutional WordPress sites and templates.</li>
+                  <li>Implemented security hardening, plugin updates, and performance optimizations.</li>
+                  <li>Designed reusable, accessible templates and trained content editors on workflows.</li>
+                </ul>
+              </div>
+            </template>
+            <div class="mt-auto p-2 d-flex justify-content-start">
+              <button class="btn btn-sm btn-outline-light detail-btn" type="button" data-detail="details-web" aria-expanded="false" aria-controls="expDetailModal">Details</button>
+            </div>
+          </div>
+        </div>
+
+        <!-- OIC-Dean, College of Computer Studies -->
+        <div class="col-md-6">
+          <div class="card card-custom p-3 text-start h-100 d-flex flex-column" data-start="2016-11" data-end="2017-11">
+            <div>
+              <h5 class="mb-1">OIC-Dean, College of Computer Studies</h5>
+              <div class="experience-meta d-flex align-items-center justify-content-between">
+                <div class="d-flex align-items-center gap-2 small text-muted">
+                  <span class="company-name">University of Antique</span>
+                  <span><i data-lucide="calendar" style="width:14px;height:14px;vertical-align:middle;margin-right:6px"></i> Nov 2016 – Nov 2017</span>
+                </div>
+                <span class="badge-duration">1 yr 1 mo</span>
+              </div>
+              <p class="mt-2">Served as interim dean overseeing faculty coordination, course scheduling, and curriculum quality to maintain academic continuity.</p>
+            </div>
+            <template id="details-dean">
+              <div class="card card-body bg-transparent border-0 p-0 text-muted">
+                <ul>
+                  <li>Coordinated faculty workloads, schedules, and program delivery during interim leadership.</li>
+                  <li>Facilitated curriculum review and academic quality assurance activities.</li>
+                </ul>
+              </div>
+            </template>
+            <div class="mt-auto p-2 d-flex justify-content-start">
+              <button class="btn btn-sm btn-outline-light detail-btn" type="button" data-detail="details-dean" aria-expanded="false" aria-controls="expDetailModal">Details</button>
+            </div>
+          </div>
+        </div>
+
+        <!-- Instructor (prior contract) -->
+        <div class="col-md-6">
+          <div class="card card-custom p-3 text-start h-100 d-flex flex-column" data-start="2009-07" data-end="2015-06">
+            <div>
+              <h5 class="mb-1">Instructor (Contract)</h5>
+              <div class="experience-meta d-flex align-items-center justify-content-between">
+                <div class="d-flex align-items-center gap-2 small text-muted">
+                  <span class="company-name">University of Antique</span>
+                  <span><i data-lucide="calendar" style="width:14px;height:14px;vertical-align:middle;margin-right:6px"></i> Jul 2009 – Jun 2015</span>
+                </div>
+                <span class="badge-duration">6 yrs</span>
+              </div>
+              <p class="mt-2">Delivered core computing lectures and lab instruction; developed assessments and supported accreditation and departmental program improvements.</p>
+            </div>
+            <template id="details-contract">
+              <div class="card card-body bg-transparent border-0 p-0 text-muted">
+                <ul>
+                  <li>Delivered lectures for core computing subjects and supervised laboratory sessions.</li>
+                  <li>Prepared practical lab exercises, assessments, and assisted with accreditation preparations.</li>
+                </ul>
+              </div>
+            </template>
+            <div class="mt-auto p-2 d-flex justify-content-start">
+              <button class="btn btn-sm btn-outline-light detail-btn" type="button" data-detail="details-contract" aria-expanded="false" aria-controls="expDetailModal">Details</button>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section id="training">
+    <div class="container text-center">
+      <h2>Trainings & Certifications</h2>
+  <h3 class="mt-4">Certifications &amp; Credentials</h3>
+  <div class="row g-4 justify-content-center align-items-stretch mt-3">
+    <!-- CV moved to hero section -->
+
+    <!-- DPO ACE -->
+    <div class="col-12 col-sm-6 col-md-4 col-lg-3 mb-2">
+      <div class="card card-custom h-100 d-flex flex-column p-4 text-start">
+        <div>
+          <h6 class="mb-1">Certified Data Protection Officer - DPO ACE Level 1</h6>
+          <div class="small text-muted">National Privacy Commission — Sep 20, 2019</div>
+          <div class="small text-muted">ID: DPO ACE I-2019-565</div>
+        </div>
+        <div class="mt-auto d-flex justify-content-end p-3">
+          <button type="button" class="btn btn-sm btn-outline-light view-credential" data-cred-id="DPO ACE I-2019-565" data-cred-url="" data-issuer="National Privacy Commission">View Credential</button>
+        </div>
+      </div>
+    </div>
+
+    <!-- CSCU -->
+    <div class="col-12 col-sm-6 col-md-4 col-lg-3 mb-2">
+      <div class="card card-custom h-100 d-flex flex-column p-4 text-start">
+        <div>
+          <h6 class="mb-1">Certified Secure Computer User v2</h6>
+          <div class="small text-muted">EC-Council — Jul 2017</div>
+          <div class="small text-muted">ID: ECC73355734485</div>
+        </div>
+        <div class="mt-auto d-flex justify-content-end p-3">
+          <button type="button" class="btn btn-sm btn-outline-light view-credential" data-cred-id="ECC73355734485" data-cred-url="" data-issuer="EC-Council">View Credential</button>
+        </div>
+      </div>
+    </div>
+
+    <!-- Civil Service -->
+    <div class="col-12 col-sm-6 col-md-4 col-lg-3 mb-2">
+      <div class="card card-custom h-100 d-flex flex-column p-4 text-start">
+        <div>
+          <h6 class="mb-1">Civil Service Professional</h6>
+          <div class="small text-muted">Civil Service Commission — Jul 2009</div>
+        </div>
+        <div class="mt-auto d-flex justify-content-end p-3">
+          <button type="button" class="btn btn-sm btn-outline-light view-credential" data-cred-id="" data-cred-url="" data-issuer="Civil Service Commission">View Credential</button>
+        </div>
+      </div>
+    </div>
+
+    <!-- CCNA -->
+    <div class="col-12 col-sm-6 col-md-4 col-lg-3 mb-2">
+      <div class="card card-custom h-100 d-flex flex-column p-4 text-start">
+        <div>
+          <h6 class="mb-1">Cisco Certified Network Associate</h6>
+          <div class="small text-muted">Cisco Networking Academy</div>
+        </div>
+        <div class="mt-auto d-flex justify-content-end p-3">
+          <button type="button" class="btn btn-sm btn-outline-light view-credential" data-cred-id="" data-cred-url="" data-issuer="Cisco Networking Academy">View Credential</button>
+        </div>
+      </div>
+    </div>
+
+    <!-- DICT-issued credentialed trainings (examples) -->
+    <div class="col-12 col-sm-6 col-md-4 col-lg-3 mb-2">
+      <div class="card card-custom h-100 d-flex flex-column p-4 text-start">
+        <div>
+          <h6 class="mb-1">Training of Trainers on Web Development</h6>
+          <div class="small text-muted">DICT — Issued Jun 2022</div>
+          <div class="small text-muted">ID: ILCDB_CO_TWDWD_2022_01</div>
+        </div>
+        <div class="mt-auto d-flex justify-content-end p-3">
+          <button type="button" class="btn btn-sm btn-outline-light view-credential" data-cred-id="ILCDB_CO_TWDWD_2022_01" data-cred-url="" data-issuer="Department of Information and Communications Technology">View Credential</button>
+        </div>
+      </div>
+    </div>
+
+    <div class="col-12 col-sm-6 col-md-4 col-lg-3 mb-2">
+      <div class="card card-custom h-100 d-flex flex-column p-4 text-start">
+        <div>
+          <h6 class="mb-1">Training For Trainers: Foundations of CERT Operations</h6>
+          <div class="small text-muted">DICT — Issued May 2021</div>
+          <div class="small text-muted">ID: TOT-FCERT 2021-01</div>
+        </div>
+        <div class="mt-auto d-flex justify-content-end p-3">
+          <button type="button" class="btn btn-sm btn-outline-light view-credential" data-cred-id="TOT-FCERT 2021-01" data-cred-url="" data-issuer="Department of Information and Communications Technology">View Credential</button>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <h3 class="mt-5">Trainings &amp; Workshops</h3>
+  <div class="row g-4 justify-content-center align-items-stretch mt-3">
+    <!-- Government Web Template Training -->
+    <div class="col-12 col-sm-6 col-md-4 col-lg-4 mb-2">
+      <div class="card card-custom training-card h-100 d-flex flex-column text-start p-3">
+        <div class="training-card-meta">
+          <h6 class="mb-1">Government Web Template Training for Trainers</h6>
+          <div class="small text-muted">DICT — Jun 2019</div>
+          <div class="mt-2">
+            <span class="skill-chip">WordPress</span>
+            <span class="skill-chip">HTML</span>
+            <span class="skill-chip">PHP</span>
+          </div>
+        </div>
+        <div class="mt-auto d-flex justify-content-end p-3">
+          <button type="button" class="btn btn-sm btn-outline-light view-credential" data-cred-id="" data-cred-url="" data-issuer="Department of Information and Communications Technology">View</button>
+        </div>
+      </div>
+    </div>
+
+    <!-- Python ToT -->
+    <div class="col-12 col-sm-6 col-md-4 col-lg-4 mb-2">
+      <div class="card card-custom h-100 d-flex flex-column p-4 text-start">
+        <div>
+          <h6 class="mb-1">Training of Trainers on Python Programming</h6>
+          <div class="small text-muted">DICT — Oct 2020</div>
+          <div class="small text-muted">ID: TW-PYPROG 2020-01</div>
+        </div>
+        <div class="mt-auto d-flex justify-content-end p-3">
+          <button type="button" class="btn btn-sm btn-outline-light view-credential" data-cred-id="TW-PYPROG 2020-01" data-cred-url="" data-issuer="Department of Information and Communications Technology">View</button>
+        </div>
+      </div>
+    </div>
+
+    <!-- Python Applied Object Detection workshop -->
+    <div class="col-12 col-sm-6 col-md-4 col-lg-4 mb-2">
+      <div class="card card-custom h-100 d-flex flex-column p-4 text-start">
+        <div>
+          <h6 class="mb-1">Python Programming: Applied Object Detection</h6>
+          <div class="small text-muted">ICPEP Region IV-A — Jun 2021</div>
+        </div>
+        <div class="mt-auto d-flex justify-content-end p-3">
+          <button type="button" class="btn btn-sm btn-outline-light view-credential" data-cred-id="" data-cred-url="" data-issuer="Institute of Computer Engineers of the Philippines">View</button>
+        </div>
+      </div>
+    </div>
+
+    <!-- Basic CERT Ops -->
+    <div class="col-12 col-sm-6 col-md-4 col-lg-4 mb-2">
+      <div class="card card-custom h-100 d-flex flex-column p-4 text-start">
+        <div>
+          <h6 class="mb-1">Basic Concept &amp; Functions on CERT Operations</h6>
+          <div class="small text-muted">DICT Mindanao Cluster 1 — May 2021</div>
+        </div>
+        <div class="mt-auto d-flex justify-content-end p-3">
+          <button type="button" class="btn btn-sm btn-outline-light view-credential" data-cred-id="" data-cred-url="" data-issuer="Department of Information and Communications Technology">View</button>
+        </div>
+      </div>
+    </div>
+
+    <!-- ELEMENTOR workshop -->
+    <div class="col-12 col-sm-6 col-md-4 col-lg-4 mb-2">
+      <div class="card card-custom h-100 d-flex flex-column p-4 text-start">
+        <div>
+          <h6 class="mb-1">ELEMENTOR: Website Builder Plugin for WordPress</h6>
+          <div class="small text-muted">DICT Western Visayas — Dec 2020</div>
+        </div>
+        <div class="mt-auto d-flex justify-content-end p-3">
+          <button type="button" class="btn btn-sm btn-outline-light view-credential" data-cred-id="" data-cred-url="" data-issuer="Department of Information and Communications Technology Western Visayas">View</button>
+        </div>
+      </div>
+    </div>
+
+    <!-- Cybersecurity Competency Framework -->
+    <div class="col-12 col-sm-6 col-md-4 col-lg-4 mb-2">
+      <div class="card card-custom h-100 d-flex flex-column p-4 text-start">
+        <div>
+          <h6 class="mb-1">Cybersecurity Competency Framework</h6>
+          <div class="small text-muted">DICT Western Visayas — Dec 2020</div>
+        </div>
+        <div class="mt-auto d-flex justify-content-end p-3">
+          <button type="button" class="btn btn-sm btn-outline-light view-credential" data-cred-id="" data-cred-url="" data-issuer="Department of Information and Communications Technology Western Visayas">View</button>
+        </div>
+      </div>
+    </div>
+
+    <!-- Data Privacy & Governance -->
+    <div class="col-12 col-sm-6 col-md-4 col-lg-4 mb-2">
+      <div class="card card-custom h-100 d-flex flex-column p-4 text-start">
+        <div>
+          <h6 class="mb-1">Data Privacy Protection &amp; Data Driven Governance</h6>
+          <div class="small text-muted">DICT Mindanao Cluster 1 — Oct 2020</div>
+        </div>
+        <div class="mt-auto d-flex justify-content-end p-3">
+          <button type="button" class="btn btn-sm btn-outline-light view-credential" data-cred-id="" data-cred-url="" data-issuer="Department of Information and Communications Technology">View</button>
+        </div>
+      </div>
+    </div>
+  </div>
+    </div>
+  </section>
+
+  <section id="contact">
+    <div class="container text-center">
+      <h2>Contact</h2>
+      <p class="w-75 mx-auto mb-4">Feel free to reach out for collaborations, training, or consultancy inquiries. Use the form below or email me directly.</p>
+
+      <div class="row justify-content-center">
+        <div class="col-lg-8">
+          <form id="contactForm" class="card card-custom p-4" novalidate>
+            <!-- Alert container: will be populated with Bootstrap alert classes for error/success -->
+            <div id="contactFeedback" class="alert" role="status" aria-live="polite" style="display:none"></div>
+            <div class="row g-3">
+              <div class="col-md-6">
+                <label for="cf-name" class="form-label small text-muted">Full name</label>
+                <input type="text" id="cf-name" name="name" class="form-control" required aria-required="true" placeholder="Your full name" maxlength="100">
+              </div>
+              <div class="col-md-6">
+                <label for="cf-email" class="form-label small text-muted">Email</label>
+                <input type="email" id="cf-email" name="email" class="form-control" required aria-required="true" placeholder="you@example.com" maxlength="254">
+              </div>
+              <div class="col-12">
+                <label for="cf-subject" class="form-label small text-muted">Subject</label>
+                <input type="text" id="cf-subject" name="subject" class="form-control" placeholder="Brief subject" required maxlength="120">
+              </div>
+              <div class="col-12">
+                <label for="cf-message" class="form-label small text-muted">Message</label>
+                <textarea id="cf-message" name="message" rows="6" class="form-control" placeholder="Write your message here" required maxlength="2000" aria-describedby="cf-msg-count"></textarea>
+                <div class="form-text small text-muted mt-1"><span id="cf-msg-count">0</span>/2000</div>
+              </div>
+
+              <!-- honeypot to deter simple spam bots -->
+              <div style="display:none">
+                <label for="cf-website">Leave empty</label>
+                <input type="text" id="cf-website" name="website" tabindex="-1" autocomplete="off">
+              </div>
+
+              <div class="col-12 d-flex justify-content-between align-items-center">
+                <small class="text-muted">Or email directly: <a href="mailto:gerard.paglingayen@gmail.com">gerard.paglingayen@gmail.com</a></small>
+                <div>
+                  <button type="reset" class="btn btn-sm btn-outline-light me-2">Reset</button>
+                  <button type="submit" class="btn btn-sm btn-accent" id="cf-submit">Send message</button>
+                </div>
+              </div>
+            </div>
+          </form>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <footer class="text-center">
+    <div class="container small">© <span id="year"></span> Engr. Gerard James B. Paglingayen · lamerock.github.io</div>
+  </footer>
+
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
+  <!-- Certificate preview modal -->
+  <div class="modal fade" id="certModal" tabindex="-1" aria-hidden="true" role="dialog" aria-labelledby="certModalTitle" aria-modal="true">
+    <div class="modal-dialog modal-xl modal-dialog-centered">
+      <div class="modal-content bg-dark text-light" style="border-radius:14px;">
+        <div class="modal-header border-0 align-items-center">
+          <h5 class="modal-title" id="certModalTitle">Certificate preview</h5>
+          <div class="ms-auto d-flex gap-2 align-items-center">
+            <button class="btn btn-sm btn-outline-light" id="prevPage" aria-label="Previous page">Prev</button>
+            <span class="text-muted small" id="pageInfo" role="status" aria-live="polite">0 / 0</span>
+            <button class="btn btn-sm btn-outline-light" id="nextPage" aria-label="Next page">Next</button>
+            <button class="btn btn-sm btn-outline-light" id="zoomOut" aria-label="Zoom out">-</button>
+            <button class="btn btn-sm btn-outline-light" id="zoomIn" aria-label="Zoom in">+</button>
+            <button type="button" class="btn-close btn-close-white" data-bs-dismiss="modal" aria-label="Close"></button>
+          </div>
+        </div>
+        <div class="modal-body p-0" style="height:80vh; display:flex; align-items:center; justify-content:center;">
+          <div id="pdfViewer" style="width:100%; height:100%; display:flex; align-items:center; justify-content:center; background:#0b1220; padding:12px;">
+            <figure style="margin:0; max-width:100%;">
+              <figcaption id="pdfCaption" class="text-center small text-muted mb-2">Preview</figcaption>
+              <canvas id="pdfCanvas" role="img" aria-describedby="pdfCaption" style="display:block; margin:0 auto; max-width:100%; box-shadow:0 8px 30px rgba(0,0,0,0.6);"></canvas>
+            </figure>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+  <!-- Credential detail modal -->
+  <div class="modal fade" id="credModal" tabindex="-1" aria-hidden="true" role="dialog" aria-labelledby="credModalTitle" aria-modal="true">
+    <div class="modal-dialog modal-md modal-dialog-centered">
+      <div class="modal-content bg-dark text-light" style="border-radius:12px;">
+        <div class="modal-header border-0">
+          <h5 class="modal-title" id="credModalTitle">Credential</h5>
+          <button type="button" class="btn-close btn-close-white" data-bs-dismiss="modal" aria-label="Close"></button>
+        </div>
+        <div class="modal-body">
+          <p class="text-muted mb-2" id="credModalIssuer"></p>
+          <p><strong>Credential ID:</strong> <span id="credModalId"></span></p>
+          <div class="d-flex gap-2 mt-3">
+            <button class="btn btn-sm btn-accent" id="credCopyBtn">Copy ID</button>
+            <a href="#" target="_blank" rel="noopener noreferrer" class="btn btn-sm btn-outline-light" id="credOpenBtn">Open Verification</a>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+  <!-- Experience detail modal (reusable) -->
+  <div class="modal fade" id="expDetailModal" tabindex="-1" aria-hidden="true" role="dialog" aria-labelledby="expDetailModalTitle" aria-modal="true">
+    <div class="modal-dialog modal-lg modal-dialog-centered">
+      <div class="modal-content bg-dark text-light" style="border-radius:12px;">
+        <div class="modal-header border-0">
+          <h5 class="modal-title" id="expDetailModalTitle">Details</h5>
+          <button type="button" class="btn-close btn-close-white" data-bs-dismiss="modal" aria-label="Close"></button>
+        </div>
+        <div class="modal-body">
+          <div class="card card-custom p-3">
+            <p id="expDetailCompany" class="small mb-2"></p>
+            <div id="expDetailBody" class="text-muted"></div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+  <script>
+    lucide.createIcons();
+
+    const canvas = document.getElementById('particleCanvas');
+    const ctx = canvas.getContext('2d');
+    let particles = [];
+
+    function resizeCanvas() {
+      canvas.width = window.innerWidth;
+      canvas.height = document.getElementById('hero').offsetHeight;
+    }
+
+    window.addEventListener('resize', resizeCanvas);
+    resizeCanvas();
+
+    // fewer, slower, and subtler particles for a professional background
+    for (let i = 0; i < 18; i++) {
+      particles.push({
+        x: Math.random() * canvas.width,
+        y: Math.random() * canvas.height,
+        r: Math.random() * 1.6 + 0.6,
+        dx: (Math.random() - 0.5) * 0.35,
+        dy: (Math.random() - 0.5) * 0.35
+      });
+    }
+
+    function draw() {
+      ctx.clearRect(0, 0, canvas.width, canvas.height);
+  ctx.fillStyle = 'rgba(11, 114, 133, 0.14)';
+  ctx.strokeStyle = 'rgba(11, 114, 133, 0.06)';
+  ctx.lineWidth = 0.6;
+
+      for (let i = 0; i < particles.length; i++) {
+        let p = particles[i];
+        ctx.beginPath();
+        ctx.arc(p.x, p.y, p.r, 0, Math.PI * 2);
+        ctx.fill();
+        p.x += p.dx;
+        p.y += p.dy;
+
+        if (p.x < 0 || p.x > canvas.width) p.dx *= -1;
+        if (p.y < 0 || p.y > canvas.height) p.dy *= -1;
+
+        for (let j = i + 1; j < particles.length; j++) {
+          let q = particles[j];
+          let dist = Math.hypot(p.x - q.x, p.y - q.y);
+          if (dist < 80) {
+            ctx.beginPath();
+            ctx.moveTo(p.x, p.y);
+            ctx.lineTo(q.x, q.y);
+            ctx.stroke();
+          }
+        }
+      }
+      requestAnimationFrame(draw);
+    }
+
+    draw();
+
+    // Improve scrolling for fixed header: compute navbar height, set CSS scroll-padding, and create an observer
+    (function(){
+      const sections = document.querySelectorAll('section');
+      const nav = document.querySelector('.navbar');
+      function getNavHeight(){
+        try { return nav ? Math.ceil(nav.getBoundingClientRect().height) : 72; } catch(e) { return 72; }
+      }
+
+      function applyNavOffset(){
+        const h = getNavHeight();
+        // add a small gap so content isn't flush with the bar
+        const offset = h + 12;
+        document.documentElement.style.setProperty('--nav-offset', offset + 'px');
+        // support browsers that respect scroll-padding on root
+        document.documentElement.style.scrollPaddingTop = offset + 'px';
+        document.body.style.scrollPaddingTop = offset + 'px';
+        return offset;
+      }
+
+      // create observer with rootMargin to consider the fixed header
+      let observer = null;
+      function createObserver(){
+        const offset = applyNavOffset();
+        if (observer) observer.disconnect();
+        observer = new IntersectionObserver(entries => {
+          entries.forEach(entry => {
+            if (entry.isIntersecting) entry.target.classList.add('visible');
+          });
+        }, { root: null, rootMargin: `-${offset}px 0px 0px 0px`, threshold: 0.12 });
+        sections.forEach(section => observer.observe(section));
+      }
+
+      // intercept navbar anchor clicks and perform offset scroll to avoid overlap
+      function wireAnchors(){
+        const links = document.querySelectorAll('.navbar a[href^="#"]');
+        links.forEach(a => {
+          a.addEventListener('click', function(e){
+            const href = a.getAttribute('href');
+            if (!href || href === '#' || href === '#!') return;
+            const el = document.querySelector(href);
+            if (!el) return;
+            e.preventDefault();
+            const navH = getNavHeight();
+            const offset = navH + 12;
+            const top = el.getBoundingClientRect().top + window.scrollY - offset;
+            window.scrollTo({ top, behavior: 'smooth' });
+            // update URL without jumping
+            try { history.pushState(null, '', href); } catch(e) { /* ignore */ }
+          });
+        });
+      }
+
+      // initialize
+      if (document.readyState === 'loading') {
+        document.addEventListener('DOMContentLoaded', () => { createObserver(); wireAnchors(); });
+      } else { createObserver(); wireAnchors(); }
+
+      // If the page was loaded with a hash, ensure we scroll with offset once content is ready
+      function scrollToHashWithOffset() {
+        const h = window.location.hash;
+        if (!h) return;
+        const el = document.querySelector(h);
+        if (!el) return;
+        const navH = getNavHeight();
+        const offset = navH + 12;
+        const top = el.getBoundingClientRect().top + window.scrollY - offset;
+        // delay slightly to avoid race with browser's default jump
+        setTimeout(() => window.scrollTo({ top, behavior: 'smooth' }), 50);
+      }
+      if (document.readyState === 'complete') scrollToHashWithOffset();
+      window.addEventListener('hashchange', scrollToHashWithOffset);
+      // Recreate on resize/zoom to recalc navbar height
+      let resizeTimer = null;
+      window.addEventListener('resize', () => { clearTimeout(resizeTimer); resizeTimer = setTimeout(createObserver, 120); });
+    })();
+    
+      // Keyboard navigation between top-level sections (ArrowUp/ArrowLeft = previous, ArrowDown/ArrowRight = next)
+      (function(){
+        const sections = Array.from(document.querySelectorAll('main > section'));
+        if (!sections.length) return;
+
+        function isTypingInInput(){
+          const t = document.activeElement;
+          if (!t) return false;
+          const tag = t.tagName;
+          if (tag === 'INPUT' || tag === 'TEXTAREA' || t.isContentEditable) return true;
+          // ignore editable select-like elements
+          return false;
+        }
+
+        function isModalOpen(){
+          return !!document.querySelector('.modal.show');
+        }
+
+        function getCurrentSectionIndex(){
+          const scrollTop = window.scrollY || window.pageYOffset;
+          let closestIdx = 0; let closestDist = Infinity;
+          const navH = Math.ceil(document.querySelector('.navbar')?.getBoundingClientRect().height || 72) + 12;
+          sections.forEach((sec, i) => {
+            const rect = sec.getBoundingClientRect();
+            const top = rect.top + window.scrollY - navH;
+            const dist = Math.abs(top - scrollTop);
+            if (dist < closestDist) { closestDist = dist; closestIdx = i; }
+          });
+          return closestIdx;
+        }
+
+        function scrollToSection(idx){
+          if (idx < 0 || idx >= sections.length) return;
+          const sec = sections[idx];
+          const navH = Math.ceil(document.querySelector('.navbar')?.getBoundingClientRect().height || 72) + 12;
+          const top = sec.getBoundingClientRect().top + window.scrollY - navH;
+          window.scrollTo({ top, behavior: 'smooth' });
+          try { history.replaceState(null, '', '#' + sec.id); } catch(e) { /* ignore */ }
+        }
+
+        function onKey(e){
+          if (isTypingInInput()) return;
+          if (isModalOpen()) return;
+          const key = e.key;
+          if (!['ArrowUp','ArrowLeft','ArrowDown','ArrowRight'].includes(key)) return;
+          e.preventDefault();
+          const idx = getCurrentSectionIndex();
+          if (key === 'ArrowUp' || key === 'ArrowLeft') scrollToSection(Math.max(0, idx - 1));
+          else if (key === 'ArrowDown' || key === 'ArrowRight') scrollToSection(Math.min(sections.length - 1, idx + 1));
+        }
+
+        document.addEventListener('keydown', onKey, { passive: false });
+      })();
+
+    const progressBar = document.getElementById('progressBar');
+    window.addEventListener('scroll', () => {
+      const scrollTop = document.documentElement.scrollTop || document.body.scrollTop;
+      const scrollHeight = document.documentElement.scrollHeight - document.documentElement.clientHeight;
+      const progress = (scrollTop / scrollHeight) * 100;
+      progressBar.style.width = progress + '%';
+    });
+
+    document.getElementById('year').textContent = new Date().getFullYear();
+  </script>
+  <script>
+    // Experience Details modal wiring: open reusable modal populated from the existing collapse blocks
+    (function(){
+      const modalEl = document.getElementById('expDetailModal');
+      if (!modalEl) return;
+      const modal = new bootstrap.Modal(modalEl);
+      const bodyEl = document.getElementById('expDetailBody');
+      const companyEl = document.getElementById('expDetailCompany');
+
+      // Find detail buttons that reference template ids via data-detail
+      const detailButtons = Array.from(document.querySelectorAll('.detail-btn[data-detail]'));
+
+      detailButtons.forEach(btn => {
+        btn.addEventListener('click', function(ev){
+          ev.preventDefault();
+          const id = btn.getAttribute('data-detail');
+          if (!id) return;
+          const target = document.getElementById(id);
+          if (!target) { console.warn('Experience details target not found for', id); return; }
+
+          // Use the nearest card header to extract company/name info if available
+          const card = btn.closest('.card') || btn.closest('.card-custom');
+          let headerText = '';
+          if (card) {
+            const h = card.querySelector('h5, h6');
+            const comp = card.querySelector('.company-name');
+            const parts = [];
+            if (h && h.textContent) parts.push(h.textContent.trim());
+            if (comp && comp.textContent) parts.push(comp.textContent.trim());
+            headerText = parts.filter(Boolean).join(' — ');
+          }
+
+          // Populate modal
+          companyEl.textContent = headerText;
+          bodyEl.innerHTML = '';
+          if (target.tagName === 'TEMPLATE') {
+            const frag = target.content.cloneNode(true);
+            bodyEl.appendChild(frag);
+          } else {
+            bodyEl.innerHTML = target.innerHTML || '';
+          }
+
+          // store opener for focus restoration and set aria state
+          modalEl.__lastActive = btn;
+          try { btn.setAttribute('aria-expanded', 'true'); } catch(e){}
+          modal.show();
+        });
+      });
+
+      // On modal hide, restore focus to opener and update aria-expanded
+      modalEl.addEventListener('hidden.bs.modal', () => {
+        try {
+          const last = modalEl.__lastActive;
+          if (last && typeof last.focus === 'function') last.focus();
+          if (last && last.classList && last.classList.contains('detail-btn')) {
+            try { last.setAttribute('aria-expanded', 'false'); } catch(e){}
+          }
+        } catch (e) { /* ignore */ }
+      });
+    })();
+  </script>
+  <script>
+    // Simple typing effect for the hero (accessible fallback present in #heroTypeText)
+    (function(){
+      const lines = [
+        'Computer Engineer | Developer | Data Protection Advocate',
+        'Instructor | DICT Trainer | IoT & Embedded Systems Enthusiast'
+      ];
+      const target = document.getElementById('heroType');
+      const hidden = document.getElementById('heroTypeText');
+      const cursor = document.querySelector('.type-cursor');
+      let line = 0, char = 0; let forward = true;
+      const typingSpeed = 40; // ms
+      const pauseBetween = 1200; // ms between lines
+
+      function typeStep(){
+        const text = lines[line];
+        if (char <= text.length) {
+          target.textContent = text.slice(0, char);
+          char++;
+          setTimeout(typeStep, typingSpeed);
+        } else {
+          // hold, then delete
+          setTimeout(() => deleteStep(), pauseBetween);
+        }
+      }
+
+      function deleteStep(){
+        const text = lines[line];
+        if (char > 0) {
+          char--;
+          target.textContent = text.slice(0, char);
+          setTimeout(deleteStep, typingSpeed / 2);
+        } else {
+          line = (line + 1) % lines.length;
+          setTimeout(typeStep, 300);
+        }
+      }
+
+      // start when DOM is ready
+      if (document.readyState === 'loading') document.addEventListener('DOMContentLoaded', typeStep);
+      else typeStep();
+
+      // Keep the visually-hidden fallback in sync for screen readers
+      const obs = new MutationObserver(() => { hidden.textContent = target.textContent.replace(/\|/g,''); });
+      obs.observe(target, { characterData: true, subtree: true, childList: true });
+    })();
+  </script>
+  <style>
+    /* Tooltip (simple) */
+    .tooltip-simple{position:relative}
+    .tooltip-simple[data-tooltip]:hover::after{content:attr(data-tooltip);position:absolute;left:50%;transform:translateX(-50%);bottom:calc(100% + 8px);background:#041218;color:#e6f7fb;padding:6px 8px;border-radius:6px;font-size:0.8rem;white-space:nowrap;box-shadow:0 6px 18px rgba(0,0,0,0.6)}
+    /* Preview button loading pulse */
+    .btn-loading{animation:btnPulse 1s infinite}
+    @keyframes btnPulse{0%{transform:scale(1)}50%{transform:scale(1.03)}100%{transform:scale(1)}}
+    /* Modal card entrance animation: subtle fade + lift for smoother appearance */
+    .modal .card.card-custom{
+      opacity: 0;
+      transform: translateY(8px) scale(0.996);
+      transition: opacity .24s ease, transform .24s cubic-bezier(.2,.9,.2,1), box-shadow .24s ease;
+      will-change: opacity, transform;
+    }
+    /* When modal is shown, animate the card in */
+    .modal.show .card.card-custom{
+      opacity: 1;
+      transform: none;
+      box-shadow: 0 18px 40px rgba(2,12,20,0.45);
+    }
+
+    /* Normalize lists inside modal cards for consistent spacing */
+    .modal .card.card-custom ul{
+      margin: 0 0 0.75rem 1.15rem;
+      padding: 0;
+      line-height: 1.6;
+      color: rgba(230,247,251,0.95);
+    }
+    .modal .card.card-custom li{margin-bottom:0.45rem}
+
+    /* Make the modal card header (company/title) slightly lighter and more prominent */
+  #expDetailCompany{ color: #38bdf8; font-weight:700; margin-bottom:0.6rem; font-size:1rem; }
+  </style>
+  <style>
+    /* Tighten meta row: prefer no-wrap so duration stays on the right; allow left side to truncate with ellipsis if necessary */
+    .experience-meta { white-space: nowrap; }
+    .experience-meta > .d-flex { overflow: hidden; text-overflow: ellipsis; }
+    .experience-meta .company-name { white-space: nowrap; overflow: hidden; text-overflow: ellipsis; max-width: 60vw; display: inline-block; }
+    @media (max-width: 520px) {
+      /* On very small screens, keep duration visible and reduce its size */
+      .badge-duration { padding: 3px 6px; font-size: 0.72rem; }
+    }
+  </style>
+  <script>
+    // Auto-compute durations for experience cards.
+    (function(){
+      function parseDateToken(token) {
+        if (!token) return null;
+        token = token.trim().toLowerCase();
+        if (token === 'present' || token === 'now' || token === 'current') return new Date();
+        // Accept YYYY-MM or YYYY-MM-DD
+        const parts = token.split('-');
+        if (parts.length >= 2) {
+          const y = parseInt(parts[0], 10);
+          const m = parseInt(parts[1], 10) - 1; // zero-based
+          return new Date(y, isNaN(m) ? 0 : m, 1);
+        }
+        // Fallback: try Date constructor
+        const d = new Date(token);
+        return isNaN(d.getTime()) ? null : d;
+      }
+
+      function humanDuration(startDate, endDate) {
+        if (!startDate) return '';
+        const s = new Date(startDate.getFullYear(), startDate.getMonth(), 1);
+        const e = new Date(endDate.getFullYear(), endDate.getMonth(), 1);
+        let months = (e.getFullYear() - s.getFullYear()) * 12 + (e.getMonth() - s.getMonth());
+        if (months < 0) months = 0;
+        const years = Math.floor(months / 12);
+        const remMonths = months % 12;
+        if (years > 0 && remMonths > 0) return `${years} yr${years>1?'s':''} ${remMonths} mo${remMonths>1?'s':''}`;
+        if (years > 0) return `${years} yr${years>1?'s':''}`;
+        return `${remMonths} mo${remMonths>1?'s':''}`;
+      }
+
+      function updateDurations() {
+        const cards = document.querySelectorAll('#experience .card[data-start]');
+        cards.forEach(card => {
+          const startToken = card.getAttribute('data-start');
+          const endToken = card.getAttribute('data-end') || 'present';
+          const startDate = parseDateToken(startToken);
+          const endDate = parseDateToken(endToken);
+          const badge = card.querySelector('.badge-duration');
+          if (!badge) return;
+          // Update human-readable duration
+          if (startDate && endDate) {
+            badge.textContent = humanDuration(startDate, endDate);
+          } else {
+            // leave existing content if parsing failed
+          }
+          // Also ensure the visible month-year text is consistent when end is 'present'
+          const dateSpans = card.querySelectorAll('.experience-meta span');
+          // No further modifications for now; we rely on existing month-year text in markup
+        });
+      }
+
+      // Run once on DOMContentLoaded
+      if (document.readyState === 'loading') {
+        document.addEventListener('DOMContentLoaded', updateDurations);
+      } else {
+        updateDurations();
+      }
+    })();
+  </script>
+  <script>
+    // Certificate preview modal logic
+    (function(){
+        const certButtons = document.querySelectorAll('.view-cert');
+        const certModalEl = document.getElementById('certModal');
+        const certModal = new bootstrap.Modal(certModalEl);
+        const captionEl = document.getElementById('pdfCaption');
+        const cvBtn = document.getElementById('cvPreviewBtn');
+
+        async function openPdf(btn) {
+          const url = btn.getAttribute('data-cert');
+          if (!url) return;
+          // visually indicate loading
+          btn.setAttribute('aria-expanded','true');
+          btn.classList.add('btn-loading');
+          captionEl.textContent = 'Loading...';
+          await startPdfViewer(url);
+          captionEl.textContent = 'Preview — ' + url.split('/').pop();
+          btn.classList.remove('btn-loading');
+        }
+
+        // ensure view-cert buttons reference the modal for assistive tech
+        certButtons.forEach(btn => btn.setAttribute('aria-controls', 'certModal'));
+
+        certButtons.forEach(btn => {
+          btn.addEventListener('click', async (e) => {
+            const url = btn.getAttribute('data-cert');
+            // set caption immediately for fast feedback
+            captionEl.textContent = 'Preview — ' + (url ? url.split('/').pop() : 'Document');
+            // remember last focused element so we can restore on close
+            const lastActive = document.activeElement;
+            certModal.show();
+            // toggle aria-expanded if this is the hero CV button
+            if (btn.id === 'cvPreviewBtn') btn.setAttribute('aria-expanded','true');
+            await openPdf(btn);
+            // store lastActive in modal element for restoration
+            certModalEl.__lastActive = lastActive;
+          });
+        });
+
+        // keyboard handler scoped to the modal: ArrowLeft/ArrowRight for navigation, Escape to close
+        function certModalKeydownHandler(e) {
+          try {
+            const t = document.activeElement;
+            if (t && (t.tagName === 'INPUT' || t.tagName === 'TEXTAREA' || t.isContentEditable)) return;
+            if (e.key === 'Escape' || e.key === 'Esc') {
+              certModal.hide();
+              return;
+            }
+            if (e.key === 'ArrowRight') {
+              const nextBtn = document.getElementById('nextPage');
+              if (nextBtn) nextBtn.click();
+            } else if (e.key === 'ArrowLeft') {
+              const prevBtn = document.getElementById('prevPage');
+              if (prevBtn) prevBtn.click();
+            }
+          } catch (err) { /* ignore errors in handler */ }
+        }
+
+        // attach keydown listener when the modal is shown so it doesn't capture keys globally
+        certModalEl.addEventListener('shown.bs.modal', () => {
+          document.addEventListener('keydown', certModalKeydownHandler);
+        });
+
+        certModalEl.addEventListener('hidden.bs.modal', () => {
+          // cleanup PDF.js viewer state
+          stopPdfViewer();
+          // remove key handler when modal closes
+          document.removeEventListener('keydown', certModalKeydownHandler);
+          // reset captions and preview button state
+          if (cvBtn) {
+            cvBtn.setAttribute('aria-expanded','false');
+            cvBtn.classList.remove('btn-loading');
+          }
+          captionEl.textContent = 'Preview';
+          // restore focus to the element that opened the modal
+          try {
+            const last = certModalEl.__lastActive;
+            if (last && typeof last.focus === 'function') last.focus();
+          } catch (e) { /* ignore */ }
+        });
+    })();
+  </script>
+  <!-- PDF.js from CDN -->
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/pdf.js/3.9.179/pdf.min.js"></script>
+  <script>
+  // PDF.js viewer logic
+  let pdfDoc = null;
+  let currentPage = 1;
+  let scale = 1.2;
+  const pdfCanvasEl = document.getElementById('pdfCanvas');
+  const pdfCtx = pdfCanvasEl.getContext('2d');
+
+    async function startPdfViewer(url) {
+      try {
+        const loadingTask = pdfjsLib.getDocument(url);
+        pdfDoc = await loadingTask.promise;
+        currentPage = 1;
+        scale = 1.2;
+        document.getElementById('pageInfo').textContent = `${currentPage} / ${pdfDoc.numPages}`;
+        await renderPage(currentPage);
+      } catch (err) {
+        console.error('PDF load error', err);
+      }
+    }
+
+    async function renderPage(pageNum) {
+      const page = await pdfDoc.getPage(pageNum);
+      const viewport = page.getViewport({ scale });
+      pdfCanvasEl.width = viewport.width;
+      pdfCanvasEl.height = viewport.height;
+      const renderContext = {
+        canvasContext: pdfCtx,
+        viewport: viewport
+      };
+      await page.render(renderContext).promise;
+      document.getElementById('pageInfo').textContent = `${pageNum} / ${pdfDoc.numPages}`;
+    }
+
+    document.getElementById('nextPage').addEventListener('click', async () => {
+      if (!pdfDoc) return;
+      if (currentPage >= pdfDoc.numPages) return;
+      currentPage++;
+      await renderPage(currentPage);
+    });
+    document.getElementById('prevPage').addEventListener('click', async () => {
+      if (!pdfDoc) return;
+      if (currentPage <= 1) return;
+      currentPage--;
+      await renderPage(currentPage);
+    });
+    document.getElementById('zoomIn').addEventListener('click', async () => {
+      if (!pdfDoc) return;
+      scale = Math.min(scale + 0.2, 3);
+      await renderPage(currentPage);
+    });
+    document.getElementById('zoomOut').addEventListener('click', async () => {
+      if (!pdfDoc) return;
+      scale = Math.max(scale - 0.2, 0.4);
+      await renderPage(currentPage);
+    });
+
+    function stopPdfViewer() {
+      if (pdfDoc) {
+        try { pdfDoc.destroy(); } catch (e) { /* ignore */ }
+      }
+      pdfDoc = null;
+      currentPage = 1;
+      scale = 1.2;
+  pdfCtx.clearRect(0,0,pdfCanvasEl.width,pdfCanvasEl.height);
+      document.getElementById('pageInfo').textContent = `0 / 0`;
+    }
+  </script>
+  <script>
+    // Credential modal wiring
+    (function(){
+      const credModalEl = document.getElementById('credModal');
+      const credModal = new bootstrap.Modal(credModalEl);
+      const buttons = document.querySelectorAll('.view-credential');
+      const titleEl = document.getElementById('credModalTitle');
+      const issuerEl = document.getElementById('credModalIssuer');
+      const idEl = document.getElementById('credModalId');
+      const copyBtn = document.getElementById('credCopyBtn');
+      const openBtn = document.getElementById('credOpenBtn');
+
+      buttons.forEach(btn => {
+        btn.addEventListener('click', () => {
+          const credId = btn.getAttribute('data-cred-id') || '(no id)';
+          const credUrl = btn.getAttribute('data-cred-url') || '';
+          const issuer = btn.getAttribute('data-issuer') || '';
+          titleEl.textContent = 'Credential — ' + (issuer || 'Credential');
+          issuerEl.textContent = issuer;
+          idEl.textContent = credId;
+          if (credUrl) {
+            openBtn.href = credUrl;
+            openBtn.classList.remove('disabled');
+          } else {
+            openBtn.href = '#';
+            openBtn.classList.add('disabled');
+          }
+          copyBtn.onclick = async () => {
+            try {
+              await navigator.clipboard.writeText(credId);
+              copyBtn.textContent = 'Copied';
+              setTimeout(() => copyBtn.textContent = 'Copy ID', 1500);
+            } catch (e) {
+              console.error('Copy failed', e);
+            }
+          };
+          credModal.show();
+        });
+      });
+    })();
+  </script>
+    <script>
+      // Skill-row chevrons and snap controls
+      (function(){
+        const wrap = document.querySelector('.skill-row-wrap');
+        if (!wrap) return;
+        const row = wrap.querySelector('.skill-row');
+        const left = wrap.querySelector('.skill-scroll-left');
+        const right = wrap.querySelector('.skill-scroll-right');
+
+        function updateChevrons(){
+          // If grid layout is active, hide both
+          const gridActive = window.matchMedia('(min-width: 900px)').matches;
+          if (gridActive) {
+            left.hidden = true; right.hidden = true; return;
+          }
+          // otherwise show/hide based on scroll position
+          if (!row) { left.hidden = true; right.hidden = true; return; }
+          const maxScroll = row.scrollWidth - row.clientWidth;
+          if (maxScroll <= 8) { left.hidden = true; right.hidden = true; return; }
+          left.hidden = row.scrollLeft <= 8;
+          right.hidden = row.scrollLeft >= (maxScroll - 8);
+        }
+
+        function scrollByChip(dir){
+          if (!row) return;
+          // approximate one chip width using first child
+          const first = row.querySelector('.skill-chip');
+          const step = (first ? first.getBoundingClientRect().width : 120) + 8;
+          row.scrollBy({ left: dir * step, behavior: 'smooth' });
+        }
+
+        left.addEventListener('click', ()=> scrollByChip(-1));
+        right.addEventListener('click', ()=> scrollByChip(1));
+        row.addEventListener('scroll', ()=> requestAnimationFrame(updateChevrons));
+        window.addEventListener('resize', ()=> requestAnimationFrame(updateChevrons));
+        // initial check after DOM ready
+        if (document.readyState === 'loading') document.addEventListener('DOMContentLoaded', updateChevrons);
+        else updateChevrons();
+      })();
+    </script>
+    <!-- Contact toast (Bootstrap) -->
+    <div class="position-fixed bottom-0 end-0 p-3" style="z-index: 1200;">
+      <div id="contactToast" class="toast align-items-center text-bg-success border-0" role="alert" aria-live="assertive" aria-atomic="true">
+        <div class="d-flex">
+          <div class="toast-body">Message sent</div>
+          <button type="button" class="btn-close btn-close-white me-2 m-auto" data-bs-dismiss="toast" aria-label="Close"></button>
+        </div>
+      </div>
+    </div>
+</body>
+</html>
