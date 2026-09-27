@@ -4,7 +4,7 @@ import ExternalIcon from '../ui/ExternalIcon.astro';
 import { profile } from '../../data/portfolio';
 ---
 
-<section class="site-section contact-section" id="contact" aria-labelledby="contact-title">
+<section class="site-section site-section--viewport contact-section" id="contact" aria-labelledby="contact-title">
   <div class="site-container contact">
     <SectionHeading
       eyebrow="Get in Touch"
@@ -13,7 +13,7 @@ import { profile } from '../../data/portfolio';
       description="For professional inquiries, contact me by email or connect with me on LinkedIn or GitHub."
     />
 
-    <div class="contact__grid">
+    <div class="contact__grid" data-reveal>
       <div class="contact__message">
         <p class="contact__availability">{profile.availability}</p>
         <a class="contact__email" href={`mailto:${profile.email}`}>{profile.email}</a>
@@ -28,7 +28,6 @@ import { profile } from '../../data/portfolio';
         <a class="button button--secondary" href={profile.github} target="_blank" rel="noreferrer">
           GitHub <ExternalIcon />
         </a>
-        <a class="button button--ghost" href="/Gerard-James-Paglingayen-CV.pdf" download>Download CV</a>
       </div>
     </div>
   </div>

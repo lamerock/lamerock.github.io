@@ -3,11 +3,11 @@ import SectionHeading from '../ui/SectionHeading.astro';
 import { profile } from '../../data/portfolio';
 ---
 
-<section class="site-section" id="about" aria-labelledby="about-title">
+<section class="site-section site-section--viewport" id="about" aria-labelledby="about-title">
   <div class="site-container about">
     <SectionHeading eyebrow="Background" title="About" id="about-title" />
 
-    <div class="about__grid">
+    <div class="about__grid" data-reveal>
       <p class="about__statement">
         Software engineering, cybersecurity, privacy, technical education, and technology leadership — connected by hands-on project delivery.
       </p>
@@ -24,15 +24,15 @@ import { profile } from '../../data/portfolio';
     </div>
 
     <div class="about__facts" aria-label="Professional snapshot">
-      <article>
+      <article data-reveal>
         <strong>15 years</strong>
         <span>Higher-education technology experience</span>
       </article>
-      <article>
+      <article data-reveal>
         <strong>3 featured</strong>
         <span>Commissioned technical projects</span>
       </article>
-      <article>
+      <article data-reveal>
         <strong>Leadership</strong>
         <span>Data Protection, MIS, and institutional planning appointments</span>
       </article>

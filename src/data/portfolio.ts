@@ -164,6 +164,7 @@ export const projects = [
       'A PHP/MySQL web application for faculty document submission, requirements tracking, user profiles, notifications, and administrative approvals. I developed and maintained the application while strengthening its security through standardized CSRF protection, centralized request validation, secure session workflows, and protection of state-changing operations.',
     contribution:
       'Security and functional testing included PHP linting, PowerShell-based HTTP requests, authenticated-session testing, and verification of CSRF enforcement.',
+    focus: ['Faculty workflow management', 'Security hardening', 'Authenticated request testing'],
     technologies: ['PHP', 'MySQL', 'Bootstrap', 'JavaScript', 'PowerShell', 'Application Security'],
     image: '/images/projects/faculty-system-placeholder.svg',
     imageAlt: 'Placeholder preview for the Faculty Document Submission and Requirements Management System',
@@ -180,6 +181,7 @@ export const projects = [
       'An AI-assisted mobile and IoT system that classifies rice-leaf nutrient deficiency and uses the classification result to control irrigation hardware. I developed a TensorFlow/Keras CNN for four nutrient-deficiency levels, deployed the model to Android using TensorFlow Lite, and integrated the Kotlin application with an Arduino Uno R4 WiFi for automated relay-controlled irrigation.',
     contribution:
       'The implementation connected on-device image classification with HTTP-based control of relay-connected irrigation pumps.',
+    focus: ['CNN image classification', 'On-device TensorFlow Lite inference', 'HTTP-based irrigation control'],
     technologies: ['Kotlin', 'Android SDK', 'Python', 'TensorFlow', 'TensorFlow Lite', 'Arduino', 'IoT'],
     image: '/images/projects/rice-irrigation-placeholder.svg',
     imageAlt: 'Placeholder preview for the AI-powered rice leaf nutrient assessment and smart irrigation project',
@@ -196,6 +198,7 @@ export const projects = [
       'An embedded agricultural process-automation system combining environmental sensing, load-cell weight measurement, real-time monitoring, relay-controlled ventilation, and GSM communication. I implemented humidity-based fan control, moisture-content calculations, and a state-based workflow that detects target moisture levels, completes a timed final drying cycle, shuts the system down, and sends process information by SMS.',
     contribution:
       'The system integrated dual temperature/humidity sensors, load-cell measurement, a real-time clock, LCD interface, GSM communications, and relay-controlled ventilation.',
+    focus: ['Multi-sensor integration', 'State-based process control', 'GSM status reporting'],
     technologies: ['Arduino', 'C++', 'DHT22', 'HX711', 'DS3231 RTC', 'GSM', 'I2C', 'Process Automation'],
     image: '/images/projects/drying-system-placeholder.svg',
     imageAlt: 'Placeholder preview for the automated agricultural drying and monitoring system',
@@ -229,7 +232,7 @@ export const research = [
     title: 'Deep Learning Application of Automated Facemask Classification and Physical-Distancing Detection',
     publication: 'Institute of Electrical and Electronics Engineers (IEEE)',
     date: 'December 28, 2021',
-    detail: 'Publication listed in the CV; additional public abstract or project details are not provided there.',
+    detail: 'Publication is part of the professional record; additional public abstract or project details are not available here.',
     reference: 'Publication link pending',
     url: null as string | null,
   },

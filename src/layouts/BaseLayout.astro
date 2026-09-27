@@ -48,6 +48,8 @@ const structuredData = {
         document.documentElement.dataset.theme = storedTheme === 'dark' || storedTheme === 'light'
           ? storedTheme
           : systemTheme;
+
+        document.documentElement.classList.add('js');
       })();
     </script>
 
@@ -57,7 +59,7 @@ const structuredData = {
     <meta name="description" content={description} />
     <meta name="author" content={profile.name} />
     <meta name="color-scheme" content="light dark" />
-    <meta name="theme-color" content="#f8fafc" media="(prefers-color-scheme: light)" />
+    <meta name="theme-color" content="#f6f9ff" media="(prefers-color-scheme: light)" />
     <meta name="theme-color" content="#08111f" media="(prefers-color-scheme: dark)" />
 
     <meta property="og:type" content="website" />
@@ -82,5 +84,27 @@ const structuredData = {
     <main class="site-main" id="main-content">
       <slot />
     </main>
+
+    <script>
+      const revealElements = Array.from(document.querySelectorAll<HTMLElement>('[data-reveal]'));
+      const reduceMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+
+      if (reduceMotion || !('IntersectionObserver' in window)) {
+        revealElements.forEach((element) => element.dataset.revealed = 'true');
+      } else {
+        const revealObserver = new IntersectionObserver(
+          (entries, observer) => {
+            entries.forEach((entry) => {
+              if (!entry.isIntersecting || !(entry.target instanceof HTMLElement)) return;
+              entry.target.dataset.revealed = 'true';
+              observer.unobserve(entry.target);
+            });
+          },
+          { rootMargin: '0px 0px -8% 0px', threshold: 0.08 },
+        );
+
+        revealElements.forEach((element) => revealObserver.observe(element));
+      }
+    </script>
   </body>
 </html>

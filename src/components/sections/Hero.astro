@@ -4,17 +4,19 @@ import { highlights, profile } from '../../data/portfolio';
 
 <section class="hero site-section" id="hero" aria-labelledby="hero-title">
   <div class="site-container hero__grid">
-    <div class="hero__content">
-      <p class="eyebrow">{profile.eyebrow}</p>
+    <div class="hero__content" data-reveal>
+      <div class="hero__status-row">
+        <p class="eyebrow">{profile.eyebrow}</p>
+        <span class="availability-badge"><span aria-hidden="true"></span> Open to opportunities</span>
+      </div>
+
       <h1 id="hero-title">{profile.name}</h1>
       <p class="hero__role">{profile.role}</p>
       <p class="hero__lead">{profile.lead}</p>
 
       <div class="hero__actions" aria-label="Primary actions">
         <a class="button button--primary" href="#projects">View Featured Projects</a>
-        <a class="button button--secondary" href="/Gerard-James-Paglingayen-CV.pdf" download>
-          Download CV
-        </a>
+        <a class="button button--secondary" href="#contact">Contact Me</a>
       </div>
 
       <div class="hero__links" aria-label="Professional links">
@@ -30,16 +32,20 @@ import { highlights, profile } from '../../data/portfolio';
       </ul>
     </div>
 
-    <aside class="hero__media" aria-label="Profile image placeholder">
+    <aside class="hero__media" aria-label="Profile photo" data-reveal>
       <div class="hero__portrait-frame">
         <img
-          src="/images/profile/headshot-placeholder.svg"
-          alt="Placeholder for a professional headshot of Gerard James Paglingayen"
+          src="/images/profile/gerard-james-paglingayen-headshot.jpg"
+          alt="Professional portrait of Gerard James Paglingayen"
           width="720"
           height="880"
         />
+        <div class="hero__portrait-caption">
+          <span>{profile.location}</span>
+          <span>Developer · Security · IT</span>
+        </div>
       </div>
-      <p class="hero__media-note">Professional headshot placeholder</p>
+      <p class="hero__media-note">Professional headshot for the portfolio homepage.</p>
     </aside>
   </div>
 </section>
@@ -52,6 +58,33 @@ import { highlights, profile } from '../../data/portfolio';
     overflow: hidden;
   }
 
+  .hero::before {
+    position: absolute;
+    width: 28rem;
+    height: 28rem;
+    top: 7%;
+    right: -11rem;
+    border: 1px solid color-mix(in srgb, var(--color-accent) 22%, transparent);
+    border-radius: 999px;
+    background: color-mix(in srgb, var(--color-accent-soft) 28%, transparent);
+    content: '';
+    pointer-events: none;
+  }
+
+  .hero::after {
+    position: absolute;
+    width: 8rem;
+    height: 8rem;
+    top: 18%;
+    right: 12%;
+    border: 1px solid color-mix(in srgb, var(--color-warm) 30%, transparent);
+    border-radius: 1.8rem;
+    content: '';
+    opacity: 0.55;
+    pointer-events: none;
+    transform: rotate(12deg);
+  }
+
   .hero__grid {
     display: grid;
     align-items: center;
@@ -60,6 +93,39 @@ import { highlights, profile } from '../../data/portfolio';
 
   .hero__content {
     max-width: 50rem;
+  }
+
+  .hero__status-row {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    gap: 0.75rem 1rem;
+    margin-bottom: 1rem;
+  }
+
+  .hero__status-row .eyebrow {
+    margin: 0;
+  }
+
+  .availability-badge {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.45rem;
+    padding: 0.35rem 0.58rem;
+    border: 1px solid var(--color-border);
+    border-radius: 999px;
+    background: var(--color-accent-soft);
+    color: var(--color-accent-strong);
+    font-size: 0.72rem;
+    font-weight: 720;
+  }
+
+  .availability-badge > span {
+    width: 0.46rem;
+    height: 0.46rem;
+    border-radius: 999px;
+    background: var(--color-accent);
+    box-shadow: 0 0 0 0.22rem color-mix(in srgb, var(--color-accent) 14%, transparent);
   }
 
   .hero h1 {
@@ -71,7 +137,7 @@ import { highlights, profile } from '../../data/portfolio';
 
   .hero__role {
     margin-bottom: 1.25rem;
-    color: var(--color-accent);
+    color: var(--color-accent-strong);
     font-size: clamp(1.25rem, 3vw, 2rem);
     font-weight: 760;
     letter-spacing: -0.025em;
@@ -146,7 +212,7 @@ import { highlights, profile } from '../../data/portfolio';
     border: 1px solid var(--color-border);
     border-radius: 2rem;
     background: var(--color-surface);
-    box-shadow: var(--shadow-md);
+    box-shadow: var(--shadow-lg);
   }
 
   .hero__portrait-frame::after {
@@ -162,6 +228,26 @@ import { highlights, profile } from '../../data/portfolio';
     width: 100%;
     aspect-ratio: 4 / 5;
     object-fit: cover;
+    object-position: center 28%;
+  }
+
+  .hero__portrait-caption {
+    position: absolute;
+    right: 0.9rem;
+    bottom: 0.9rem;
+    left: 0.9rem;
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: space-between;
+    gap: 0.4rem 1rem;
+    padding: 0.7rem 0.8rem;
+    border: 1px solid rgb(255 255 255 / 0.14);
+    border-radius: 0.8rem;
+    background: rgb(8 17 31 / 0.84);
+    color: #eaf2ff;
+    font-family: var(--font-mono);
+    font-size: 0.68rem;
+    backdrop-filter: blur(12px);
   }
 
   .hero__media-note {
@@ -185,6 +271,11 @@ import { highlights, profile } from '../../data/portfolio';
   @media (max-width: 57.99rem) {
     .hero {
       min-height: auto;
+    }
+
+    .hero::before,
+    .hero::after {
+      display: none;
     }
 
     .hero__media {

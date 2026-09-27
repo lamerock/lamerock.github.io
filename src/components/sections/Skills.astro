@@ -3,7 +3,7 @@ import SectionHeading from '../ui/SectionHeading.astro';
 import { skillGroups } from '../../data/portfolio';
 ---
 
-<section class="site-section site-section--soft" id="skills" aria-labelledby="skills-title">
+<section class="site-section site-section--soft site-section--viewport" id="skills" aria-labelledby="skills-title">
   <div class="site-container">
     <SectionHeading
       eyebrow="Capabilities"
@@ -14,7 +14,7 @@ import { skillGroups } from '../../data/portfolio';
 
     <div class="skills-grid">
       {skillGroups.map((group) => (
-        <article class="skill-card">
+        <article class="skill-card" data-reveal>
           <h3>{group.title}</h3>
           <ul class="skill-card__items">
             {group.items.map((item) => <li>{item}</li>)}

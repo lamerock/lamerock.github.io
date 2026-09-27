@@ -1,22 +1,22 @@
 <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1200 800" role="img" aria-labelledby="title desc">
   <title id="title">Agricultural drying system placeholder</title>
   <desc id="desc">Abstract embedded monitoring and process automation placeholder.</desc>
-  <rect width="1200" height="800" fill="#111827"/>
-  <g stroke="#334155" stroke-width="2" fill="none">
+  <rect width="1200" height="800" fill="#08111f"/>
+  <g stroke="#334a68" stroke-width="2" fill="none">
     <path d="M0 160h1200M0 320h1200M0 480h1200M0 640h1200"/>
     <path d="M200 0v800M400 0v800M600 0v800M800 0v800M1000 0v800"/>
   </g>
-  <rect x="108" y="150" width="410" height="470" rx="30" fill="#0f1b2d" stroke="#f59e0b" stroke-opacity=".45" stroke-width="3"/>
-  <rect x="148" y="200" width="330" height="125" rx="16" fill="#172554"/>
-  <text x="313" y="270" text-anchor="middle" fill="#93c5fd" font-family="ui-monospace, monospace" font-size="32">TEMP · RH · MASS</text>
-  <g fill="#f59e0b"><circle cx="185" cy="405" r="38"/><circle cx="312" cy="405" r="38" fill-opacity=".55"/><circle cx="439" cy="405" r="38" fill-opacity=".3"/></g>
-  <rect x="650" y="190" width="390" height="130" rx="22" fill="#0f1b2d" stroke="#38bdf8" stroke-opacity=".35" stroke-width="2"/>
-  <rect x="650" y="365" width="390" height="130" rx="22" fill="#0f1b2d" stroke="#4ade80" stroke-opacity=".35" stroke-width="2"/>
-  <path d="M845 320v45" stroke="#e2e8f0" stroke-width="4" stroke-dasharray="8 10"/>
-  <path d="M845 495v70" stroke="#e2e8f0" stroke-width="4" stroke-dasharray="8 10"/>
-  <rect x="650" y="565" width="390" height="85" rx="22" fill="#0f1b2d" stroke="#f59e0b" stroke-opacity=".35" stroke-width="2"/>
+  <rect x="108" y="150" width="410" height="470" rx="30" fill="#0d1726" stroke="#22d3ee" stroke-opacity=".45" stroke-width="3"/>
+  <rect x="148" y="200" width="330" height="125" rx="16" fill="#15345d"/>
+  <text x="313" y="270" text-anchor="middle" fill="#bfdbfe" font-family="ui-monospace, monospace" font-size="32">TEMP · RH · MASS</text>
+  <g fill="#22d3ee"><circle cx="185" cy="405" r="38"/><circle cx="312" cy="405" r="38" fill-opacity=".55"/><circle cx="439" cy="405" r="38" fill-opacity=".3"/></g>
+  <rect x="650" y="190" width="390" height="130" rx="22" fill="#0d1726" stroke="#60a5fa" stroke-opacity=".35" stroke-width="2"/>
+  <rect x="650" y="365" width="390" height="130" rx="22" fill="#0d1726" stroke="#38bdf8" stroke-opacity=".35" stroke-width="2"/>
+  <path d="M845 320v45" stroke="#eaf2ff" stroke-width="4" stroke-dasharray="8 10"/>
+  <path d="M845 495v70" stroke="#eaf2ff" stroke-width="4" stroke-dasharray="8 10"/>
+  <rect x="650" y="565" width="390" height="85" rx="22" fill="#0d1726" stroke="#22d3ee" stroke-opacity=".35" stroke-width="2"/>
   <text x="845" y="245" text-anchor="middle" fill="#cbd5e1" font-family="ui-monospace, monospace" font-size="22">SENSOR INPUT</text>
   <text x="845" y="420" text-anchor="middle" fill="#cbd5e1" font-family="ui-monospace, monospace" font-size="22">STATE CONTROL</text>
   <text x="845" y="615" text-anchor="middle" fill="#cbd5e1" font-family="ui-monospace, monospace" font-size="22">GSM / RELAY OUTPUT</text>
-  <text x="600" y="755" text-anchor="middle" fill="#94a3b8" font-family="ui-monospace, monospace" font-size="18">EMBEDDED PROCESS AUTOMATION · MEDIA PLACEHOLDER</text>
+  <text x="600" y="755" text-anchor="middle" fill="#9fb0c8" font-family="ui-monospace, monospace" font-size="18">EMBEDDED PROCESS AUTOMATION · MEDIA PLACEHOLDER</text>
 </svg>
