@@ -24,6 +24,32 @@ const navItems = [
 
 const featuredExperience = experience.slice(0, 4);
 const additionalExperience = experience.slice(4);
+const featuredCertifications = certifications.slice(0, 3);
+const additionalCertifications = certifications.slice(3);
+const coreSkills = [
+  'PHP',
+  'MySQL',
+  'Python',
+  'JavaScript',
+  'Kotlin',
+  'C++',
+  'Laravel',
+  'React',
+  'Next.js',
+  'Flask',
+  'Git',
+  'GitHub',
+  'Application Security',
+  'Data Privacy',
+  'Incident Response',
+  'TensorFlow',
+  'TensorFlow Lite',
+  'Android SDK',
+  'Arduino',
+  'Raspberry Pi',
+  'Technology Project Delivery',
+  'Kanban',
+] as const;
 ---
 
 <div class="workspace-shell">
@@ -39,6 +65,9 @@ const additionalExperience = experience.slice(4);
               alt="Professional portrait of Gerard James Paglingayen"
               width="500"
               height="500"
+              loading="eager"
+              fetchpriority="high"
+              decoding="async"
             />
             <span class="status-dot" title="Open to professional opportunities"></span>
           </div>
@@ -54,8 +83,14 @@ const additionalExperience = experience.slice(4);
 
           <div class="identity-actions">
             <a class="action-primary" href={`mailto:${profile.email}`}>Email Me</a>
-            <a class="action-secondary" href={profile.linkedin} target="_blank" rel="noreferrer">LinkedIn</a>
-            <a class="action-secondary" href={profile.github} target="_blank" rel="noreferrer">GitHub</a>
+            <div class="identity-socials" aria-label="Professional profiles">
+              <a href={profile.linkedin} target="_blank" rel="noreferrer" aria-label="LinkedIn profile">
+                <span aria-hidden="true">in</span> LinkedIn
+              </a>
+              <a href={profile.github} target="_blank" rel="noreferrer" aria-label="GitHub profile">
+                <span aria-hidden="true">GH</span> GitHub
+              </a>
+            </div>
           </div>
 
           <dl class="profile-facts">
@@ -226,7 +261,7 @@ const additionalExperience = experience.slice(4);
                 <h3>{item.title}</h3>
                 <p>{item.detail}</p>
               </div>
-              <span>{item.reference}</span>
+              <span class="research-reference">{item.reference}</span>
             </article>
           ))}
         </div>
@@ -252,16 +287,23 @@ const additionalExperience = experience.slice(4);
           <h2 id="skills-title">Technical expertise</h2>
         </div>
 
-        <div class="skill-groups">
-          {skillGroups.map((group) => (
-            <section class="skill-group">
-              <h3>{group.title}</h3>
-              <div class="tag-row">
-                {group.items.map((item) => <span>{item}</span>)}
-              </div>
-            </section>
-          ))}
+        <div class="core-skill-list" aria-label="Core technologies and practices">
+          {coreSkills.map((item) => <span>{item}</span>)}
         </div>
+
+        <details class="capability-details">
+          <summary>View full capability map</summary>
+          <div class="skill-groups">
+            {skillGroups.map((group) => (
+              <section class="skill-group">
+                <h3>{group.title}</h3>
+                <div class="tag-row">
+                  {group.items.map((item) => <span>{item}</span>)}
+                </div>
+              </section>
+            ))}
+          </div>
+        </details>
       </section>
 
       <section class="panel compact-panel" id="credentials" aria-labelledby="credentials-title" data-reveal>
@@ -283,8 +325,8 @@ const additionalExperience = experience.slice(4);
         </div>
 
         <div class="credential-block">
-          <h3>Certifications</h3>
-          {certifications.map((item) => (
+          <h3>Selected certifications</h3>
+          {featuredCertifications.map((item) => (
             <article class="cert-item">
               <span class="cert-mark" aria-hidden="true">✓</span>
               <div>
@@ -293,6 +335,23 @@ const additionalExperience = experience.slice(4);
               </div>
             </article>
           ))}
+
+          {additionalCertifications.length > 0 && (
+            <details class="credential-details">
+              <summary>Additional certifications</summary>
+              <div class="credential-details__list">
+                {additionalCertifications.map((item) => (
+                  <article class="cert-item">
+                    <span class="cert-mark" aria-hidden="true">✓</span>
+                    <div>
+                      <strong>{item.name}</strong>
+                      <span>{item.issuer} · {item.year}</span>
+                    </div>
+                  </article>
+                ))}
+              </div>
+            </details>
+          )}
         </div>
 
         <details class="learning-details">
@@ -303,12 +362,6 @@ const additionalExperience = experience.slice(4);
         </details>
       </section>
 
-      <section class="panel compact-panel quick-contact" data-reveal>
-        <p class="section-label">Professional Links</p>
-        <a href={`mailto:${profile.email}`}>{profile.email}</a>
-        <a href={profile.linkedin} target="_blank" rel="noreferrer">LinkedIn ↗</a>
-        <a href={profile.github} target="_blank" rel="noreferrer">GitHub ↗</a>
-      </section>
     </aside>
   </div>
 
@@ -321,30 +374,82 @@ const additionalExperience = experience.slice(4);
 
 <script>
   const dashboardLinks = Array.from(document.querySelectorAll<HTMLAnchorElement>('[data-dashboard-link]'));
+  const workspaceNav = document.querySelector<HTMLElement>('.workspace-nav');
   const targets = dashboardLinks
     .map((link) => document.querySelector<HTMLElement>(link.getAttribute('href') ?? ''))
     .filter((section): section is HTMLElement => Boolean(section));
 
-  if ('IntersectionObserver' in window) {
-    const observer = new IntersectionObserver(
-      (entries) => {
-        const visible = entries
-          .filter((entry) => entry.isIntersecting)
-          .sort((a, b) => b.intersectionRatio - a.intersectionRatio)[0];
+  const reduceMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+  let activeSection = '';
+  let updateQueued = false;
 
-        if (!(visible?.target instanceof HTMLElement)) return;
+  const setActiveSection = (id: string) => {
+    if (!id || id === activeSection) return;
+    activeSection = id;
 
-        dashboardLinks.forEach((link) => {
-          const active = link.getAttribute('href') === `#${visible.target.id}`;
-          if (active) link.setAttribute('aria-current', 'location');
-          else link.removeAttribute('aria-current');
+    dashboardLinks.forEach((link) => {
+      const isActive = link.getAttribute('href') === `#${id}`;
+      if (isActive) {
+        link.setAttribute('aria-current', 'location');
+        link.scrollIntoView({
+          block: 'nearest',
+          inline: 'nearest',
+          behavior: reduceMotion ? 'auto' : 'smooth',
         });
-      },
-      { rootMargin: '-20% 0px -60% 0px', threshold: [0.05, 0.2, 0.5] },
-    );
+      } else {
+        link.removeAttribute('aria-current');
+      }
+    });
+  };
 
-    targets.forEach((target) => observer.observe(target));
-  }
+  const updateActiveSection = () => {
+    updateQueued = false;
+    if (!targets.length) return;
+
+    const navHeight = workspaceNav?.getBoundingClientRect().height ?? 64;
+    const readingLine = Math.min(window.innerHeight * 0.22, navHeight + 42);
+    const atPageEnd = window.scrollY + window.innerHeight >= document.documentElement.scrollHeight - 12;
+
+    if (atPageEnd) {
+      setActiveSection(targets[targets.length - 1].id);
+      return;
+    }
+
+    let nearest = targets[0];
+    let bestScore = Number.POSITIVE_INFINITY;
+
+    targets.forEach((target, index) => {
+      const rect = target.getBoundingClientRect();
+      const containsReadingLine = rect.top <= readingLine && rect.bottom >= readingLine;
+      const topDistance = Math.abs(rect.top - readingLine);
+      // Prefer the section containing the reading line. Use DOM/navigation order as a stable tie-breaker.
+      const score = (containsReadingLine ? -100000 : 0) + topDistance + index * 0.001;
+
+      if (score < bestScore) {
+        bestScore = score;
+        nearest = target;
+      }
+    });
+
+    setActiveSection(nearest.id);
+  };
+
+  const queueActiveUpdate = () => {
+    if (updateQueued) return;
+    updateQueued = true;
+    window.requestAnimationFrame(updateActiveSection);
+  };
+
+  dashboardLinks.forEach((link) => {
+    link.addEventListener('click', () => {
+      const id = link.getAttribute('href')?.slice(1);
+      if (id) setActiveSection(id);
+    });
+  });
+
+  updateActiveSection();
+  window.addEventListener('scroll', queueActiveUpdate, { passive: true });
+  window.addEventListener('resize', queueActiveUpdate);
 </script>
 
 <style>
@@ -432,7 +537,7 @@ const additionalExperience = experience.slice(4);
 
   .workspace-nav__links a {
     display: inline-flex;
-    min-height: 2.45rem;
+    min-height: 2.75rem;
     flex: 0 0 auto;
     align-items: center;
     padding: 0.5rem 0.63rem;
@@ -554,11 +659,11 @@ const additionalExperience = experience.slice(4);
 
   .identity-actions {
     display: grid;
-    gap: 0.5rem;
+    gap: 0.65rem;
     margin-bottom: 1rem;
   }
 
-  .identity-actions a,
+  .identity-actions > .action-primary,
   .contact-actions a {
     display: inline-flex;
     min-height: 2.65rem;
@@ -584,10 +689,44 @@ const additionalExperience = experience.slice(4);
     background: var(--color-accent-strong);
   }
 
-  .action-secondary:hover,
   .contact-actions a:last-child:hover {
     border-color: var(--color-accent);
     color: var(--color-accent-strong);
+  }
+
+  .identity-socials {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.45rem 0.8rem;
+  }
+
+  .identity-socials a {
+    display: inline-flex;
+    min-height: 2.5rem;
+    align-items: center;
+    gap: 0.35rem;
+    color: var(--color-text-muted);
+    font-size: 0.72rem;
+    font-weight: 740;
+    text-decoration: none;
+  }
+
+  .identity-socials a:hover {
+    color: var(--color-accent-strong);
+  }
+
+  .identity-socials a span {
+    display: inline-grid;
+    min-width: 1.55rem;
+    height: 1.55rem;
+    place-items: center;
+    border: 1px solid var(--color-border);
+    border-radius: 0.45rem;
+    background: var(--color-surface-muted);
+    color: var(--color-accent-strong);
+    font-family: var(--font-mono);
+    font-size: 0.57rem;
+    font-weight: 850;
   }
 
   .profile-facts {
@@ -851,6 +990,9 @@ const additionalExperience = experience.slice(4);
   }
 
   .project-links a {
+    display: inline-flex;
+    min-height: 2.5rem;
+    align-items: center;
     color: var(--color-accent-strong);
   }
 
@@ -898,15 +1040,14 @@ const additionalExperience = experience.slice(4);
     font-size: 0.78rem;
   }
 
-  .more-experience,
-  .learning-details {
+  .more-experience {
     margin-top: 1rem;
     border-top: 1px solid var(--color-border);
   }
 
-  .more-experience summary,
-  .learning-details summary {
-    padding-top: 0.85rem;
+  .more-experience summary {
+    min-height: 2.75rem;
+    padding-block: 0.85rem 0.35rem;
     color: var(--color-accent-strong);
     cursor: pointer;
     font-size: 0.76rem;
@@ -955,7 +1096,7 @@ const additionalExperience = experience.slice(4);
     font-size: 0.76rem;
   }
 
-  .research-list article > span {
+  .research-reference {
     max-width: 12rem;
     color: var(--color-text-muted);
     font-family: var(--font-mono);
@@ -963,10 +1104,48 @@ const additionalExperience = experience.slice(4);
     text-align: right;
   }
 
+  .core-skill-list {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.38rem;
+  }
+
+  .core-skill-list span {
+    padding: 0.3rem 0.5rem;
+    border: 1px solid var(--color-border);
+    border-radius: 0.5rem;
+    background: var(--color-surface-muted);
+    color: var(--color-text-muted);
+    font-size: 0.65rem;
+    font-weight: 720;
+  }
+
+  .capability-details,
+  .credential-details,
+  .learning-details {
+    margin-top: 0.9rem;
+    border-top: 1px solid var(--color-border);
+  }
+
+  .capability-details summary,
+  .credential-details summary,
+  .learning-details summary {
+    min-height: 2.75rem;
+    padding-block: 0.78rem 0.35rem;
+    color: var(--color-accent-strong);
+    cursor: pointer;
+    font-size: 0.72rem;
+    font-weight: 760;
+  }
+
   .skill-groups,
   .credential-block {
     display: grid;
     gap: 0.85rem;
+  }
+
+  .capability-details .skill-groups {
+    padding-top: 0.65rem;
   }
 
   .skill-group {
@@ -1043,26 +1222,18 @@ const additionalExperience = experience.slice(4);
     gap: 0.12rem;
   }
 
+  .credential-details__list {
+    display: grid;
+    gap: 0.7rem;
+    padding-top: 0.7rem;
+  }
+
   .learning-details ul {
     display: grid;
     gap: 0.45rem;
     padding-left: 1rem;
     color: var(--color-text-muted);
     font-size: 0.68rem;
-  }
-
-  .quick-contact {
-    display: grid;
-    gap: 0.45rem;
-  }
-
-  .quick-contact a {
-    width: fit-content;
-    color: var(--color-accent-strong);
-    font-size: 0.72rem;
-    font-weight: 720;
-    text-decoration-thickness: 1px;
-    text-underline-offset: 0.22em;
   }
 
   .contact-panel {
@@ -1114,9 +1285,6 @@ const additionalExperience = experience.slice(4);
       grid-template-columns: repeat(2, minmax(0, 1fr));
     }
 
-    .support-column .quick-contact {
-      grid-column: 1 / -1;
-    }
   }
 
   @media (max-width: 58rem) {
@@ -1147,8 +1315,7 @@ const additionalExperience = experience.slice(4);
 
     .identity-rail,
     .primary-column,
-    .support-column,
-    .support-column .quick-contact {
+    .support-column {
       grid-column: 1;
     }
 
@@ -1226,7 +1393,7 @@ const additionalExperience = experience.slice(4);
       width: fit-content;
     }
 
-    .research-list article > span {
+    .research-reference {
       max-width: none;
       text-align: left;
     }

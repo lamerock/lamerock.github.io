@@ -164,6 +164,23 @@ li {
   transform: none;
 }
 
+
+@media (prefers-contrast: more) {
+  :root {
+    --color-border: #9eb2d0;
+    --color-text-muted: #334664;
+  }
+
+  :root[data-theme="dark"] {
+    --color-border: #6f85a4;
+    --color-text-muted: #c6d4e8;
+  }
+
+  :focus-visible {
+    outline-width: 4px;
+  }
+}
+
 @media (prefers-reduced-motion: reduce) {
   html {
     scroll-behavior: auto;
