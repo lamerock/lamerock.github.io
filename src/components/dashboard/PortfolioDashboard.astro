@@ -1,4 +1,6 @@
 ---
+import { Image } from 'astro:assets';
+import headshot from '../../assets/profile/gerard-james-paglingayen-headshot.jpg';
 import ThemeToggle from '../layout/ThemeToggle.astro';
 import {
   certifications,
@@ -60,14 +62,14 @@ const coreSkills = [
 
         <div class="identity-card__body">
           <div class="portrait-wrap">
-            <img
-              src="/images/profile/gerard-james-paglingayen-headshot.jpg"
+            <Image
+              src={headshot}
               alt="Professional portrait of Gerard James Paglingayen"
-              width="500"
-              height="500"
-              loading="eager"
-              fetchpriority="high"
-              decoding="async"
+              width={500}
+              height={500}
+              format="webp"
+              quality={82}
+              priority
             />
             <span class="status-dot" title="Open to professional opportunities"></span>
           </div>
@@ -160,9 +162,13 @@ const coreSkills = [
 
         <div class="project-stack">
           {projects.map((project, index) => (
-            <article class="project-card">
+            <article class:list={['project-card', { 'project-card--reverse': index % 2 === 1 }]}>
               <div class="project-card__media">
-                <img src={project.image} alt={project.imageAlt} width="960" height="640" loading="lazy" />
+                <Image
+                  src={project.image}
+                  alt={project.imageAlt}
+                  priority={index === 0}
+                />
                 <span class="project-index">0{index + 1}</span>
               </div>
 
@@ -367,7 +373,6 @@ const coreSkills = [
 
   <footer class="workspace-footer">
     <p>© {new Date().getFullYear()} {profile.name}</p>
-    <p>Designed as a one-page technical portfolio.</p>
     <a href="#top">Back to top ↑</a>
   </footer>
 </div>
@@ -875,6 +880,20 @@ const coreSkills = [
     background: var(--color-surface);
   }
 
+  .project-card--reverse {
+    grid-template-columns: minmax(0, 1.25fr) minmax(12rem, 0.75fr);
+  }
+
+  .project-card--reverse .project-card__media {
+    grid-column: 2;
+    grid-row: 1;
+  }
+
+  .project-card--reverse .project-card__body {
+    grid-column: 1;
+    grid-row: 1;
+  }
+
   .project-card__media {
     position: relative;
     min-height: 100%;
@@ -1359,8 +1378,23 @@ const coreSkills = [
       grid-column: 1 / -1;
     }
 
-    .project-card {
+    .project-card,
+    .project-card--reverse {
       grid-template-columns: 1fr;
+    }
+
+    .project-card--reverse .project-card__media,
+    .project-card--reverse .project-card__body {
+      grid-column: 1;
+      grid-row: auto;
+    }
+
+    .project-card--reverse .project-card__media {
+      grid-row: 1;
+    }
+
+    .project-card--reverse .project-card__body {
+      grid-row: 2;
     }
 
     .project-card__media img {

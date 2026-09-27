@@ -1,3 +1,7 @@
+import facultySystemImage from '../assets/projects/faculty-system-placeholder.svg';
+import riceIrrigationImage from '../assets/projects/rice-irrigation-placeholder.svg';
+import dryingSystemImage from '../assets/projects/drying-system-placeholder.svg';
+
 export const profile = {
   name: 'Gerard James Paglingayen',
   role: 'Cybersecurity & Full-Stack Technology Professional',
@@ -166,7 +170,7 @@ export const projects = [
       'Security and functional testing included PHP linting, PowerShell-based HTTP requests, authenticated-session testing, and verification of CSRF enforcement.',
     focus: ['Faculty workflow management', 'Security hardening', 'Authenticated request testing'],
     technologies: ['PHP', 'MySQL', 'Bootstrap', 'JavaScript', 'PowerShell', 'Application Security'],
-    image: '/images/projects/faculty-system-placeholder.svg',
+    image: facultySystemImage,
     imageAlt: 'Placeholder preview for the Faculty Document Submission and Requirements Management System',
     outcome: 'Verified deployment, usage, and measurable impact details to be added.',
     repositoryUrl: null as string | null,
@@ -183,7 +187,7 @@ export const projects = [
       'The implementation connected on-device image classification with HTTP-based control of relay-connected irrigation pumps.',
     focus: ['CNN image classification', 'On-device TensorFlow Lite inference', 'HTTP-based irrigation control'],
     technologies: ['Kotlin', 'Android SDK', 'Python', 'TensorFlow', 'TensorFlow Lite', 'Arduino', 'IoT'],
-    image: '/images/projects/rice-irrigation-placeholder.svg',
+    image: riceIrrigationImage,
     imageAlt: 'Placeholder preview for the AI-powered rice leaf nutrient assessment and smart irrigation project',
     outcome: 'Verified model evaluation, deployment, and operational metrics to be added.',
     repositoryUrl: null as string | null,
@@ -200,7 +204,7 @@ export const projects = [
       'The system integrated dual temperature/humidity sensors, load-cell measurement, a real-time clock, LCD interface, GSM communications, and relay-controlled ventilation.',
     focus: ['Multi-sensor integration', 'State-based process control', 'GSM status reporting'],
     technologies: ['Arduino', 'C++', 'DHT22', 'HX711', 'DS3231 RTC', 'GSM', 'I2C', 'Process Automation'],
-    image: '/images/projects/drying-system-placeholder.svg',
+    image: dryingSystemImage,
     imageAlt: 'Placeholder preview for the automated agricultural drying and monitoring system',
     outcome: 'Verified deployment context and measured operational results to be added.',
     repositoryUrl: null as string | null,
