@@ -1,0 +1,505 @@
+---
+import SectionHeading from '../ui/SectionHeading.astro';
+import ExternalIcon from '../ui/ExternalIcon.astro';
+import { projects, research } from '../../data/portfolio';
+---
+
+<section class="site-section projects-section" id="projects" aria-labelledby="projects-title">
+  <div class="site-container">
+    <SectionHeading
+      eyebrow="Selected Work"
+      title="Featured Projects"
+      id="projects-title"
+      description="Selected commissioned development work spanning secure web applications, mobile machine learning, IoT integration, and embedded process automation."
+    />
+
+    <div class="projects-list">
+      {projects.map((project, index) => (
+        <article class:list={['project-card', index % 2 === 1 && 'project-card--reverse']} data-reveal>
+          <div class="project-card__media-column">
+            <div class="project-card__media">
+              <img src={project.image} alt={project.imageAlt} width="1200" height="800" loading="lazy" />
+              <div class="project-card__media-label">Project image placeholder</div>
+              <span class="project-card__number" aria-hidden="true">0{index + 1}</span>
+            </div>
+
+            <div class="project-card__video-placeholder" aria-label="Demo video placeholder">
+              <span class="project-card__play" aria-hidden="true">▶</span>
+              <div>
+                <strong>Demo video placeholder</strong>
+                <p>Reserved for an approved walkthrough, prototype demo, or system-in-use clip.</p>
+              </div>
+            </div>
+          </div>
+
+          <div class="project-card__content">
+            <div class="project-card__topline">
+              <span>{project.year}</span>
+              <span>Commissioned Project</span>
+            </div>
+
+            <h3>{project.title}</h3>
+            <p class="project-card__role">{project.role}</p>
+            <p class="project-card__description">{project.description}</p>
+
+            <div class="project-card__focus">
+              <p class="project-label">Engineering focus</p>
+              <ul>
+                {project.focus.map((item) => <li>{item}</li>)}
+              </ul>
+            </div>
+
+            <div class="project-card__detail">
+              <p class="project-label">Contribution</p>
+              <p>{project.contribution}</p>
+            </div>
+
+            <div class="project-card__stack">
+              <p class="project-label">Technology stack</p>
+              <ul class="tag-list" aria-label={`Technologies used in ${project.title}`}>
+                {project.technologies.map((technology) => <li>{technology}</li>)}
+              </ul>
+            </div>
+
+            <div class="project-card__outcome">
+              <div>
+                <span class="project-label">Verified impact</span>
+                <span class="pending-badge">Pending details</span>
+              </div>
+              <p>{project.outcome}</p>
+            </div>
+
+            <div class="project-card__actions" aria-label={`${project.title} links`}>
+              {project.repositoryUrl ? (
+                <a href={project.repositoryUrl} target="_blank" rel="noreferrer">
+                  GitHub Repository <ExternalIcon />
+                </a>
+              ) : (
+                <span class="pending-link" aria-disabled="true">Repository link pending</span>
+              )}
+              {project.demoUrl ? (
+                <a href={project.demoUrl} target="_blank" rel="noreferrer">
+                  Live Demo <ExternalIcon />
+                </a>
+              ) : (
+                <span class="pending-link" aria-disabled="true">Live demo pending</span>
+              )}
+              {project.videoUrl ? (
+                <a href={project.videoUrl} target="_blank" rel="noreferrer">
+                  Demo Video <ExternalIcon />
+                </a>
+              ) : (
+                <span class="pending-link" aria-disabled="true">Video link pending</span>
+              )}
+            </div>
+          </div>
+        </article>
+      ))}
+    </div>
+
+    <div class="research" aria-labelledby="research-title">
+      <SectionHeading
+        eyebrow="Research & Innovation"
+        title="Publications & Intellectual Property"
+        id="research-title"
+        description="Selected research and intellectual-property work. Public links remain placeholders until verified URLs are supplied."
+      />
+
+      <div class="research-grid">
+        {research.map((item, index) => (
+          <article class="research-card" data-reveal>
+            <div class="research-card__number" aria-hidden="true">R{String(index + 1).padStart(2, '0')}</div>
+            <div class="research-card__meta">
+              <span>{item.publication}</span>
+              <span>{item.date}</span>
+            </div>
+            <h3>{item.title}</h3>
+            <p>{item.detail}</p>
+            <div class="research-card__footer">
+              <code>{item.reference}</code>
+              {item.url ? (
+                <a href={item.url} target="_blank" rel="noreferrer">Open publication <ExternalIcon /></a>
+              ) : (
+                <span class="pending-link" aria-disabled="true">Public link pending</span>
+              )}
+            </div>
+          </article>
+        ))}
+      </div>
+    </div>
+  </div>
+</section>
+
+<style>
+  .projects-section {
+    overflow: hidden;
+  }
+
+  .projects-list {
+    display: grid;
+    gap: clamp(4.5rem, 10vw, 8rem);
+  }
+
+  .project-card {
+    display: grid;
+    align-items: start;
+    gap: clamp(2rem, 5vw, 4.5rem);
+  }
+
+  .project-card__media-column {
+    display: grid;
+    gap: 0.85rem;
+  }
+
+  .project-card__media {
+    position: relative;
+    overflow: hidden;
+    border: 1px solid var(--color-border);
+    border-radius: var(--radius-lg);
+    background: var(--color-surface-muted);
+    box-shadow: var(--shadow-lg);
+  }
+
+  .project-card__media::after {
+    position: absolute;
+    inset: 0;
+    border: 1px solid rgb(255 255 255 / 0.08);
+    border-radius: inherit;
+    content: '';
+    pointer-events: none;
+  }
+
+  .project-card__media img {
+    width: 100%;
+    aspect-ratio: 3 / 2;
+    object-fit: cover;
+  }
+
+  .project-card__media-label,
+  .project-card__number {
+    position: absolute;
+    z-index: 1;
+    border: 1px solid rgb(255 255 255 / 0.16);
+    background: rgb(8 17 31 / 0.86);
+    color: #eaf2ff;
+    font-family: var(--font-mono);
+    backdrop-filter: blur(10px);
+  }
+
+  .project-card__media-label {
+    right: 0.8rem;
+    bottom: 0.8rem;
+    padding: 0.38rem 0.58rem;
+    border-radius: 999px;
+    font-size: 0.68rem;
+  }
+
+  .project-card__number {
+    top: 0.8rem;
+    left: 0.8rem;
+    display: grid;
+    width: 2.5rem;
+    height: 2.5rem;
+    place-items: center;
+    border-radius: 0.7rem;
+    font-size: 0.72rem;
+    font-weight: 800;
+  }
+
+  .project-card__video-placeholder {
+    display: flex;
+    gap: 0.85rem;
+    align-items: center;
+    padding: 0.85rem 1rem;
+    border: 1px dashed var(--color-border);
+    border-radius: var(--radius-md);
+    background: color-mix(in srgb, var(--color-surface) 72%, transparent);
+    color: var(--color-text-muted);
+  }
+
+  .project-card__play {
+    display: grid;
+    width: 2.35rem;
+    height: 2.35rem;
+    flex: 0 0 auto;
+    place-items: center;
+    border-radius: 999px;
+    background: var(--color-surface-muted);
+    color: var(--color-accent);
+  }
+
+  .project-card__video-placeholder strong {
+    display: block;
+    color: var(--color-text);
+    font-size: 0.82rem;
+  }
+
+  .project-card__video-placeholder p {
+    margin: 0.12rem 0 0;
+    font-size: 0.76rem;
+  }
+
+  .project-card__topline {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.45rem 1rem;
+    margin-bottom: 0.75rem;
+    color: var(--color-accent);
+    font-family: var(--font-mono);
+    font-size: 0.72rem;
+    font-weight: 760;
+    letter-spacing: 0.04em;
+    text-transform: uppercase;
+  }
+
+  .project-card h3 {
+    margin-bottom: 0.55rem;
+    font-size: clamp(1.8rem, 4vw, 3.15rem);
+    letter-spacing: -0.045em;
+  }
+
+  .project-card__role {
+    margin-bottom: 1.15rem;
+    color: var(--color-text);
+    font-size: 0.9rem;
+    font-weight: 740;
+  }
+
+  .project-card__description,
+  .project-card__detail p,
+  .project-card__outcome p,
+  .research-card p {
+    color: var(--color-text-muted);
+  }
+
+  .project-card__description {
+    font-size: 1.02rem;
+  }
+
+  .project-label {
+    display: block;
+    margin: 0 0 0.55rem;
+    color: var(--color-text);
+    font-size: 0.72rem;
+    font-weight: 800;
+    letter-spacing: 0.09em;
+    text-transform: uppercase;
+  }
+
+  .project-card__focus {
+    margin-block: 1.4rem;
+    padding: 1rem 1.1rem;
+    border: 1px solid var(--color-border);
+    border-radius: var(--radius-md);
+    background: var(--color-surface-muted);
+  }
+
+  .project-card__focus ul {
+    display: grid;
+    gap: 0.5rem;
+    padding: 0;
+    margin: 0;
+    list-style: none;
+  }
+
+  .project-card__focus li {
+    display: flex;
+    gap: 0.65rem;
+    align-items: baseline;
+    color: var(--color-text-muted);
+    font-size: 0.9rem;
+  }
+
+  .project-card__focus li::before {
+    width: 0.4rem;
+    height: 0.4rem;
+    flex: 0 0 auto;
+    border-radius: 999px;
+    background: var(--color-accent);
+    content: '';
+  }
+
+  .project-card__detail {
+    margin-block: 1.4rem;
+    padding-left: 1rem;
+    border-left: 2px solid var(--color-accent);
+  }
+
+  .project-card__detail p {
+    margin: 0;
+  }
+
+  .project-card__stack {
+    margin-top: 1.4rem;
+  }
+
+  .project-card__outcome {
+    margin-top: 1.35rem;
+    padding: 1rem;
+    border: 1px dashed var(--color-border);
+    border-radius: var(--radius-md);
+    background: color-mix(in srgb, var(--color-surface-muted) 75%, transparent);
+  }
+
+  .project-card__outcome > div {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    justify-content: space-between;
+    gap: 0.5rem;
+    margin-bottom: 0.45rem;
+  }
+
+  .project-card__outcome .project-label {
+    margin: 0;
+  }
+
+  .pending-badge {
+    padding: 0.25rem 0.45rem;
+    border: 1px dashed var(--color-border);
+    border-radius: 999px;
+    color: var(--color-text-muted);
+    font-family: var(--font-mono);
+    font-size: 0.65rem;
+  }
+
+  .project-card__outcome p {
+    margin: 0;
+    font-size: 0.88rem;
+  }
+
+  .project-card__actions {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.6rem;
+    margin-top: 1.2rem;
+  }
+
+  .project-card__actions a,
+  .research-card__footer a,
+  .pending-link {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.35rem;
+    min-height: 2.35rem;
+    padding: 0.5rem 0.7rem;
+    border-radius: 0.55rem;
+    font-size: 0.78rem;
+    font-weight: 720;
+  }
+
+  .project-card__actions a,
+  .research-card__footer a {
+    border: 1px solid var(--color-border);
+    color: var(--color-accent);
+    text-decoration: none;
+  }
+
+  .project-card__actions a:hover,
+  .research-card__footer a:hover {
+    border-color: var(--color-accent);
+    background: var(--color-surface-muted);
+  }
+
+  .pending-link {
+    border: 1px dashed var(--color-border);
+    color: var(--color-text-muted);
+    cursor: not-allowed;
+    opacity: 0.84;
+  }
+
+  .research {
+    margin-top: clamp(5rem, 10vw, 8rem);
+    padding-top: clamp(3rem, 7vw, 5rem);
+    border-top: 1px solid var(--color-border);
+  }
+
+  .research-grid {
+    display: grid;
+    gap: 1rem;
+  }
+
+  .research-card {
+    position: relative;
+    display: flex;
+    min-height: 100%;
+    flex-direction: column;
+    padding: 1.45rem;
+    overflow: hidden;
+    border: 1px solid var(--color-border);
+    border-radius: var(--radius-md);
+    background: var(--color-surface);
+    box-shadow: var(--shadow-sm);
+  }
+
+  .research-card__number {
+    position: absolute;
+    top: 0.9rem;
+    right: 1rem;
+    color: color-mix(in srgb, var(--color-text-muted) 42%, transparent);
+    font-family: var(--font-mono);
+    font-size: 1.45rem;
+    font-weight: 800;
+  }
+
+  .research-card__meta {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.45rem 1rem;
+    padding-right: 3rem;
+    margin-bottom: 1rem;
+    color: var(--color-accent);
+    font-family: var(--font-mono);
+    font-size: 0.68rem;
+    font-weight: 700;
+  }
+
+  .research-card h3 {
+    max-width: 30ch;
+    margin-bottom: 0.8rem;
+    font-size: 1.15rem;
+    letter-spacing: -0.02em;
+  }
+
+  .research-card__footer {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    justify-content: space-between;
+    gap: 0.75rem;
+    margin-top: auto;
+    padding-top: 1rem;
+  }
+
+  .research-card code {
+    color: var(--color-text-muted);
+    font-family: var(--font-mono);
+    font-size: 0.7rem;
+    overflow-wrap: anywhere;
+  }
+
+  @media (min-width: 60rem) {
+    .project-card {
+      grid-template-columns: minmax(0, 1.06fr) minmax(0, 0.94fr);
+    }
+
+    .project-card--reverse .project-card__media-column {
+      order: 2;
+    }
+
+    .project-card--reverse .project-card__content {
+      order: 1;
+    }
+
+    .research-grid {
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+    }
+  }
+
+  @media (max-width: 36rem) {
+    .project-card__actions > * {
+      width: 100%;
+      justify-content: center;
+    }
+  }
+</style>

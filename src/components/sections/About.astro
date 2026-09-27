@@ -1,0 +1,111 @@
+---
+import SectionHeading from '../ui/SectionHeading.astro';
+import { profile } from '../../data/portfolio';
+---
+
+<section class="site-section site-section--viewport" id="about" aria-labelledby="about-title">
+  <div class="site-container about">
+    <SectionHeading eyebrow="Background" title="About" id="about-title" />
+
+    <div class="about__grid" data-reveal>
+      <p class="about__statement">
+        Software engineering, cybersecurity, privacy, technical education, and technology leadership — connected by hands-on project delivery.
+      </p>
+
+      <div class="about__copy">
+        <p>
+          My background combines hands-on software engineering with cybersecurity, data privacy, technical education, IT operations, and technology leadership. Over 15 years in higher education, I taught and applied programming, software engineering, web development, embedded systems, and cybersecurity while mentoring technical projects from requirements through testing and deployment.
+        </p>
+        <p>
+          Alongside academic work, I held institutional appointments in Management Information Systems, Data Protection, and Institutional Planning, with responsibilities spanning ICT strategy, privacy compliance, project coordination, stakeholder engagement, and program monitoring. My recent commissioned development work includes secure PHP/MySQL applications, Android and TensorFlow Lite machine-learning systems, and Arduino-based IoT and process-automation projects.
+        </p>
+        <p class="about__availability">{profile.availability}</p>
+      </div>
+    </div>
+
+    <div class="about__facts" aria-label="Professional snapshot">
+      <article data-reveal>
+        <strong>15 years</strong>
+        <span>Higher-education technology experience</span>
+      </article>
+      <article data-reveal>
+        <strong>3 featured</strong>
+        <span>Commissioned technical projects</span>
+      </article>
+      <article data-reveal>
+        <strong>Leadership</strong>
+        <span>Data Protection, MIS, and institutional planning appointments</span>
+      </article>
+    </div>
+  </div>
+</section>
+
+<style>
+  .about__grid {
+    display: grid;
+    gap: clamp(2rem, 5vw, 5rem);
+  }
+
+  .about__statement {
+    max-width: 19ch;
+    margin: 0;
+    font-size: clamp(1.55rem, 4vw, 2.65rem);
+    font-weight: 760;
+    letter-spacing: -0.04em;
+    line-height: 1.16;
+  }
+
+  .about__copy {
+    max-width: 47rem;
+    color: var(--color-text-muted);
+  }
+
+  .about__copy p:last-child {
+    margin-bottom: 0;
+  }
+
+  .about__availability {
+    padding-left: 1rem;
+    border-left: 3px solid var(--color-accent);
+    color: var(--color-text);
+    font-weight: 680;
+  }
+
+  .about__facts {
+    display: grid;
+    gap: 1rem;
+    margin-top: clamp(2.5rem, 6vw, 5rem);
+  }
+
+  .about__facts article {
+    padding: 1.35rem;
+    border: 1px solid var(--color-border);
+    border-radius: var(--radius-md);
+    background: var(--color-surface);
+  }
+
+  .about__facts strong,
+  .about__facts span {
+    display: block;
+  }
+
+  .about__facts strong {
+    margin-bottom: 0.3rem;
+    font-size: 1.15rem;
+  }
+
+  .about__facts span {
+    color: var(--color-text-muted);
+    font-size: 0.92rem;
+  }
+
+  @media (min-width: 48rem) {
+    .about__grid {
+      grid-template-columns: minmax(0, 0.8fr) minmax(0, 1.2fr);
+    }
+
+    .about__facts {
+      grid-template-columns: repeat(3, minmax(0, 1fr));
+    }
+  }
+</style>

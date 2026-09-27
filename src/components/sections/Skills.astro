@@ -1,0 +1,89 @@
+---
+import SectionHeading from '../ui/SectionHeading.astro';
+import { skillGroups } from '../../data/portfolio';
+---
+
+<section class="site-section site-section--soft site-section--viewport" id="skills" aria-labelledby="skills-title">
+  <div class="site-container">
+    <SectionHeading
+      eyebrow="Capabilities"
+      title="Technical Expertise"
+      id="skills-title"
+      description="Technologies and practices applied across software development, application security, mobile and machine-learning systems, embedded platforms, IT operations, and technology project delivery."
+    />
+
+    <div class="skills-grid">
+      {skillGroups.map((group) => (
+        <article class="skill-card" data-reveal>
+          <h3>{group.title}</h3>
+          <ul class="skill-card__items">
+            {group.items.map((item) => <li>{item}</li>)}
+          </ul>
+        </article>
+      ))}
+    </div>
+
+    <p class="skills-note">
+      Skills are presented without percentage ratings or proficiency bars; the projects and experience sections show where the technologies were applied.
+    </p>
+  </div>
+</section>
+
+<style>
+  .skills-grid {
+    display: grid;
+    gap: 1rem;
+  }
+
+  .skill-card {
+    padding: 1.4rem;
+    border: 1px solid var(--color-border);
+    border-radius: var(--radius-md);
+    background: var(--color-surface);
+    box-shadow: var(--shadow-sm);
+  }
+
+  .skill-card h3 {
+    margin-bottom: 1rem;
+    font-size: 1.05rem;
+    letter-spacing: -0.015em;
+  }
+
+  .skill-card__items {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.5rem;
+    padding: 0;
+    margin: 0;
+    list-style: none;
+  }
+
+  .skill-card__items li {
+    padding: 0.38rem 0.58rem;
+    border: 1px solid var(--color-border);
+    border-radius: 0.5rem;
+    background: var(--color-surface-muted);
+    color: var(--color-text-muted);
+    font-family: var(--font-mono);
+    font-size: 0.73rem;
+  }
+
+  .skills-note {
+    max-width: 60rem;
+    margin: 1.5rem 0 0;
+    color: var(--color-text-muted);
+    font-size: 0.83rem;
+  }
+
+  @media (min-width: 42rem) {
+    .skills-grid {
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+    }
+  }
+
+  @media (min-width: 68rem) {
+    .skills-grid {
+      grid-template-columns: repeat(3, minmax(0, 1fr));
+    }
+  }
+</style>

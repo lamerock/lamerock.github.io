@@ -1,0 +1,18 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1200 800" role="img" aria-labelledby="title desc">
+  <title id="title">Rice nutrient assessment project placeholder</title>
+  <desc id="desc">Abstract mobile machine-learning and irrigation system placeholder.</desc>
+  <defs><linearGradient id="g" x1="0" y1="1" x2="1" y2="0"><stop offset="0" stop-color="#0f2a4f"/><stop offset="1" stop-color="#1d4ed8"/></linearGradient></defs>
+  <rect width="1200" height="800" fill="url(#g)"/>
+  <rect x="125" y="85" width="330" height="630" rx="44" fill="#0f172a" stroke="#93c5fd" stroke-opacity=".35" stroke-width="3"/>
+  <rect x="154" y="135" width="272" height="230" rx="24" fill="#15345d"/>
+  <path d="M292 325c-82-70-85-145 3-165 60 33 74 95 18 164" fill="#38bdf8" fill-opacity=".78"/>
+  <path d="M294 175c10 47 12 93 4 142" stroke="#eaf2ff" stroke-width="5" fill="none"/>
+  <rect x="154" y="402" width="272" height="28" rx="14" fill="#60a5fa" fill-opacity=".75"/>
+  <rect x="154" y="451" width="206" height="16" rx="8" fill="#9fb0c8" fill-opacity=".55"/>
+  <rect x="154" y="485" width="236" height="16" rx="8" fill="#9fb0c8" fill-opacity=".35"/>
+  <rect x="595" y="190" width="450" height="300" rx="28" fill="#0f172a" fill-opacity=".86" stroke="#38bdf8" stroke-opacity=".3" stroke-width="2"/>
+  <circle cx="720" cy="340" r="70" fill="#60a5fa" fill-opacity=".18" stroke="#60a5fa" stroke-width="3"/>
+  <circle cx="920" cy="340" r="70" fill="#38bdf8" fill-opacity=".18" stroke="#38bdf8" stroke-width="3"/>
+  <path d="M790 340h60" stroke="#eaf2ff" stroke-width="4" stroke-dasharray="8 10"/>
+  <text x="600" y="755" text-anchor="middle" fill="#dbeafe" font-family="ui-monospace, monospace" font-size="18">AI + ANDROID + IOT · MEDIA PLACEHOLDER</text>
+</svg>

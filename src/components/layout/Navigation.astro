@@ -1,0 +1,420 @@
+---
+import ThemeToggle from './ThemeToggle.astro';
+import { profile } from '../../data/portfolio';
+
+const navItems = [
+  { label: 'About', href: '#about' },
+  { label: 'Experience', href: '#experience' },
+  { label: 'Skills', href: '#skills' },
+  { label: 'Projects', href: '#projects' },
+  { label: 'Credentials', href: '#credentials' },
+  { label: 'Contact', href: '#contact' },
+];
+
+const desktopNavItems = navItems.filter((item) => item.href !== '#contact');
+---
+
+<header class="site-header" data-site-header>
+  <div class="scroll-progress" aria-hidden="true"><span data-scroll-progress></span></div>
+
+  <div class="site-container nav-shell">
+    <a class="brand" href="#top" aria-label={`${profile.name} — home`}>
+      <span class="brand-mark" aria-hidden="true">GJ</span>
+      <span class="brand-name">{profile.name}</span>
+    </a>
+
+    <nav class="desktop-nav" aria-label="Primary navigation">
+      <ul>
+        {desktopNavItems.map((item) => (
+          <li><a href={item.href} data-nav-link>{item.label}</a></li>
+        ))}
+      </ul>
+    </nav>
+
+    <div class="nav-actions">
+      <a class="nav-social" href={profile.github} target="_blank" rel="noreferrer" aria-label="GitHub profile">GH</a>
+      <a class="nav-social" href={profile.linkedin} target="_blank" rel="noreferrer" aria-label="LinkedIn profile">in</a>
+      <a class="nav-contact" href="#contact" data-nav-link>Contact</a>
+      <ThemeToggle />
+      <button
+        class="menu-button"
+        type="button"
+        data-menu-button
+        aria-expanded="false"
+        aria-controls="mobile-navigation"
+      >
+        <span class="menu-button__label">Menu</span>
+        <span class="menu-button__icon" aria-hidden="true"></span>
+      </button>
+    </div>
+  </div>
+
+  <nav class="mobile-nav" id="mobile-navigation" data-mobile-menu aria-label="Mobile navigation" hidden>
+    <div class="site-container">
+      <ul>
+        {navItems.map((item) => (
+          <li><a href={item.href} data-nav-link>{item.label}</a></li>
+        ))}
+      </ul>
+      <div class="mobile-nav__utilities" aria-label="Professional links">
+        <a href={profile.github} target="_blank" rel="noreferrer">GitHub</a>
+        <a href={profile.linkedin} target="_blank" rel="noreferrer">LinkedIn</a>
+        <a href={`mailto:${profile.email}`}>Email</a>
+      </div>
+    </div>
+  </nav>
+</header>
+
+<script>
+  const menuButton = document.querySelector<HTMLButtonElement>('[data-menu-button]');
+  const mobileMenu = document.querySelector<HTMLElement>('[data-mobile-menu]');
+  const navLinks = Array.from(document.querySelectorAll<HTMLAnchorElement>('[data-nav-link]'));
+  const progressBar = document.querySelector<HTMLElement>('[data-scroll-progress]');
+  const observedSections = Array.from(
+    new Set(
+      navLinks
+        .map((link) => document.querySelector<HTMLElement>(link.getAttribute('href') ?? ''))
+        .filter((section): section is HTMLElement => Boolean(section)),
+    ),
+  );
+
+  const closeMenu = () => {
+    if (!menuButton || !mobileMenu) return;
+    menuButton.setAttribute('aria-expanded', 'false');
+    mobileMenu.hidden = true;
+  };
+
+  menuButton?.addEventListener('click', () => {
+    if (!mobileMenu) return;
+    const isOpen = menuButton.getAttribute('aria-expanded') === 'true';
+    menuButton.setAttribute('aria-expanded', String(!isOpen));
+    mobileMenu.hidden = isOpen;
+  });
+
+  mobileMenu?.querySelectorAll('a').forEach((link) => link.addEventListener('click', closeMenu));
+
+  document.addEventListener('keydown', (event) => {
+    if (event.key === 'Escape') closeMenu();
+  });
+
+  window.addEventListener('resize', () => {
+    if (window.matchMedia('(min-width: 70rem)').matches) closeMenu();
+  });
+
+  const setActiveLink = (id: string) => {
+    navLinks.forEach((link) => {
+      const isActive = link.getAttribute('href') === `#${id}`;
+      if (isActive) link.setAttribute('aria-current', 'location');
+      else link.removeAttribute('aria-current');
+    });
+  };
+
+  if ('IntersectionObserver' in window) {
+    const observer = new IntersectionObserver(
+      (entries) => {
+        const visible = entries
+          .filter((entry) => entry.isIntersecting)
+          .sort((a, b) => b.intersectionRatio - a.intersectionRatio)[0];
+
+        if (visible?.target instanceof HTMLElement) setActiveLink(visible.target.id);
+      },
+      { rootMargin: '-20% 0px -60% 0px', threshold: [0.05, 0.2, 0.5] },
+    );
+
+    observedSections.forEach((section) => observer.observe(section));
+  }
+
+  const updateProgress = () => {
+    if (!progressBar) return;
+    const scrollable = document.documentElement.scrollHeight - window.innerHeight;
+    const progress = scrollable > 0 ? Math.min(window.scrollY / scrollable, 1) : 0;
+    progressBar.style.transform = `scaleX(${progress})`;
+  };
+
+  updateProgress();
+  window.addEventListener('scroll', updateProgress, { passive: true });
+  window.addEventListener('resize', updateProgress);
+</script>
+
+<style>
+  .site-header {
+    position: sticky;
+    z-index: 50;
+    top: 0;
+    border-bottom: 1px solid color-mix(in srgb, var(--color-border) 84%, transparent);
+    background: color-mix(in srgb, var(--color-bg) 90%, transparent);
+    backdrop-filter: blur(18px) saturate(140%);
+  }
+
+  .scroll-progress {
+    position: absolute;
+    z-index: 2;
+    right: 0;
+    bottom: -1px;
+    left: 0;
+    height: 2px;
+    overflow: hidden;
+    pointer-events: none;
+  }
+
+  .scroll-progress span {
+    display: block;
+    width: 100%;
+    height: 100%;
+    background: linear-gradient(90deg, var(--color-accent), var(--color-warm));
+    transform: scaleX(0);
+    transform-origin: left center;
+    transition: transform 80ms linear;
+  }
+
+  .nav-shell {
+    display: flex;
+    min-height: var(--nav-height);
+    align-items: center;
+    justify-content: space-between;
+    gap: 1rem;
+  }
+
+  .brand {
+    display: inline-flex;
+    min-width: 0;
+    align-items: center;
+    gap: 0.75rem;
+    color: var(--color-text);
+    font-weight: 780;
+    text-decoration: none;
+  }
+
+  .brand-mark {
+    display: grid;
+    width: 2.3rem;
+    height: 2.3rem;
+    flex: 0 0 auto;
+    place-items: center;
+    border: 1px solid color-mix(in srgb, var(--color-accent) 26%, var(--color-border));
+    border-radius: 0.75rem;
+    background: var(--color-accent-soft);
+    color: var(--color-accent-strong);
+    font-family: var(--font-mono);
+    font-size: 0.78rem;
+    font-weight: 850;
+    letter-spacing: -0.04em;
+  }
+
+  .brand-name {
+    max-width: 16rem;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+  }
+
+  .desktop-nav {
+    display: none;
+  }
+
+  .desktop-nav ul,
+  .mobile-nav ul {
+    padding: 0;
+    margin: 0;
+    list-style: none;
+  }
+
+  .nav-actions {
+    display: flex;
+    flex: 0 0 auto;
+    align-items: center;
+    gap: 0.45rem;
+  }
+
+  .nav-social,
+  .nav-contact {
+    display: none;
+  }
+
+  .menu-button {
+    display: inline-flex;
+    min-height: 2.75rem;
+    align-items: center;
+    gap: 0.6rem;
+    padding: 0.55rem 0.85rem;
+    border: 1px solid var(--color-border);
+    border-radius: 999px;
+    background: var(--color-surface);
+    cursor: pointer;
+  }
+
+  .menu-button:hover {
+    border-color: color-mix(in srgb, var(--color-accent) 55%, var(--color-border));
+  }
+
+  .menu-button__label {
+    font-size: 0.85rem;
+    font-weight: 720;
+  }
+
+  .menu-button__icon,
+  .menu-button__icon::before,
+  .menu-button__icon::after {
+    display: block;
+    width: 1rem;
+    height: 1px;
+    background: currentColor;
+    content: '';
+  }
+
+  .menu-button__icon {
+    position: relative;
+  }
+
+  .menu-button__icon::before {
+    position: absolute;
+    top: -0.3rem;
+  }
+
+  .menu-button__icon::after {
+    position: absolute;
+    top: 0.3rem;
+  }
+
+  .mobile-nav {
+    border-top: 1px solid var(--color-border);
+    background: var(--color-surface);
+    box-shadow: var(--shadow-md);
+  }
+
+  .mobile-nav ul {
+    display: grid;
+    padding-block: 0.75rem 0.25rem;
+  }
+
+  .mobile-nav a {
+    display: block;
+    min-height: 2.75rem;
+    padding: 0.72rem 0;
+    color: var(--color-text-muted);
+    font-weight: 680;
+    text-decoration: none;
+  }
+
+  .mobile-nav a:hover,
+  .mobile-nav a[aria-current='location'] {
+    color: var(--color-accent-strong);
+  }
+
+  .mobile-nav__utilities {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.4rem 1rem;
+    padding: 0.7rem 0 1rem;
+    border-top: 1px solid var(--color-border);
+  }
+
+  .mobile-nav__utilities a {
+    min-height: auto;
+    padding: 0.35rem 0;
+    color: var(--color-accent-strong);
+    font-size: 0.82rem;
+  }
+
+  @media (min-width: 48rem) {
+    .nav-social,
+    .nav-contact {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      text-decoration: none;
+    }
+
+    .nav-social {
+      width: 2.5rem;
+      height: 2.5rem;
+      border: 1px solid var(--color-border);
+      border-radius: 999px;
+      background: var(--color-surface);
+      color: var(--color-text-muted);
+      font-family: var(--font-mono);
+      font-size: 0.72rem;
+      font-weight: 800;
+    }
+
+    .nav-social:hover {
+      border-color: var(--color-accent);
+      color: var(--color-accent-strong);
+    }
+
+    .nav-contact {
+      min-height: 2.5rem;
+      padding: 0.5rem 0.82rem;
+      border: 1px solid var(--color-accent);
+      border-radius: 999px;
+      background: var(--color-accent);
+      color: var(--color-on-accent);
+      font-size: 0.8rem;
+      font-weight: 780;
+    }
+
+    .nav-contact:hover,
+    .nav-contact[aria-current='location'] {
+      border-color: var(--color-accent-strong);
+      background: var(--color-accent-strong);
+    }
+  }
+
+  @media (min-width: 70rem) {
+    .desktop-nav {
+      display: block;
+      margin-left: auto;
+    }
+
+    .desktop-nav ul {
+      display: flex;
+      align-items: center;
+      gap: 0.1rem;
+    }
+
+    .desktop-nav a {
+      display: inline-flex;
+      min-height: 2.5rem;
+      align-items: center;
+      padding: 0.5rem 0.62rem;
+      border-radius: 0.55rem;
+      color: var(--color-text-muted);
+      font-size: 0.82rem;
+      font-weight: 680;
+      text-decoration: none;
+    }
+
+    .desktop-nav a:hover,
+    .desktop-nav a[aria-current='location'] {
+      background: var(--color-surface-muted);
+      color: var(--color-text);
+    }
+
+    .desktop-nav a[aria-current='location'] {
+      box-shadow: inset 0 -2px 0 var(--color-accent);
+    }
+
+    .menu-button,
+    .mobile-nav {
+      display: none !important;
+    }
+  }
+
+  @media (max-width: 34rem) {
+    .brand-name {
+      max-width: 10.5rem;
+    }
+  }
+
+  @media (max-width: 27rem) {
+    .brand-name {
+      display: none;
+    }
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    .scroll-progress span {
+      transition: none;
+    }
+  }
+</style>

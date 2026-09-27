@@ -1,0 +1,114 @@
+<button
+  class="theme-toggle"
+  type="button"
+  data-theme-toggle
+  aria-label="Switch to dark theme"
+  aria-pressed="false"
+  title="Toggle color theme"
+>
+  <svg class="theme-icon theme-icon--sun" viewBox="0 0 24 24" aria-hidden="true">
+    <circle cx="12" cy="12" r="4"></circle>
+    <path d="M12 2v2M12 20v2M4.93 4.93l1.41 1.41M17.66 17.66l1.41 1.41M2 12h2M20 12h2M4.93 19.07l1.41-1.41M17.66 6.34l1.41-1.41"></path>
+  </svg>
+  <svg class="theme-icon theme-icon--moon" viewBox="0 0 24 24" aria-hidden="true">
+    <path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79Z"></path>
+  </svg>
+  <span class="sr-only">Toggle color theme</span>
+</button>
+
+<script>
+  const storageKey = 'portfolio-theme';
+  const buttons = Array.from(
+    document.querySelectorAll<HTMLButtonElement>('[data-theme-toggle]'),
+  );
+
+  const syncButtons = () => {
+    const isDark = document.documentElement.dataset.theme === 'dark';
+
+    buttons.forEach((button) => {
+      button.setAttribute('aria-pressed', String(isDark));
+      button.setAttribute(
+        'aria-label',
+        isDark ? 'Switch to light theme' : 'Switch to dark theme',
+      );
+      button.setAttribute(
+        'title',
+        isDark ? 'Switch to light theme' : 'Switch to dark theme',
+      );
+    });
+  };
+
+  const toggleTheme = () => {
+    const nextTheme = document.documentElement.dataset.theme === 'dark' ? 'light' : 'dark';
+    document.documentElement.dataset.theme = nextTheme;
+
+    try {
+      localStorage.setItem(storageKey, nextTheme);
+    } catch {
+      // The current-page theme still changes if storage is unavailable.
+    }
+
+    syncButtons();
+  };
+
+  buttons.forEach((button) => {
+    if (button.dataset.themeToggleBound === 'true') return;
+    button.dataset.themeToggleBound = 'true';
+    button.addEventListener('click', toggleTheme);
+  });
+
+  syncButtons();
+</script>
+
+<style>
+  .theme-toggle {
+    display: inline-grid;
+    width: 2.75rem;
+    height: 2.75rem;
+    place-items: center;
+    border: 1px solid var(--color-border);
+    border-radius: 999px;
+    background: var(--color-surface);
+    box-shadow: var(--shadow-sm);
+    cursor: pointer;
+  }
+
+  .theme-toggle:hover {
+    border-color: var(--color-accent);
+    color: var(--color-accent);
+  }
+
+  .theme-icon {
+    width: 1.1rem;
+    height: 1.1rem;
+    fill: none;
+    stroke: currentColor;
+    stroke-linecap: round;
+    stroke-linejoin: round;
+    stroke-width: 1.8;
+  }
+
+  .theme-icon--moon {
+    display: none;
+  }
+
+  :global(:root[data-theme='dark']) .theme-icon--sun {
+    display: none;
+  }
+
+  :global(:root[data-theme='dark']) .theme-icon--moon {
+    display: block;
+  }
+
+  .sr-only {
+    position: absolute;
+    width: 1px;
+    height: 1px;
+    padding: 0;
+    margin: -1px;
+    overflow: hidden;
+    clip: rect(0, 0, 0, 0);
+    white-space: nowrap;
+    border: 0;
+  }
+</style>
