@@ -18,29 +18,46 @@
 
 <script>
   const storageKey = 'portfolio-theme';
-  const button = document.querySelector<HTMLButtonElement>('[data-theme-toggle]');
+  const buttons = Array.from(
+    document.querySelectorAll<HTMLButtonElement>('[data-theme-toggle]'),
+  );
 
-  const syncButton = () => {
-    if (!button) return;
-
+  const syncButtons = () => {
     const isDark = document.documentElement.dataset.theme === 'dark';
-    button.setAttribute('aria-pressed', String(isDark));
-    button.setAttribute('aria-label', isDark ? 'Switch to light theme' : 'Switch to dark theme');
+
+    buttons.forEach((button) => {
+      button.setAttribute('aria-pressed', String(isDark));
+      button.setAttribute(
+        'aria-label',
+        isDark ? 'Switch to light theme' : 'Switch to dark theme',
+      );
+      button.setAttribute(
+        'title',
+        isDark ? 'Switch to light theme' : 'Switch to dark theme',
+      );
+    });
   };
 
-  button?.addEventListener('click', () => {
+  const toggleTheme = () => {
     const nextTheme = document.documentElement.dataset.theme === 'dark' ? 'light' : 'dark';
     document.documentElement.dataset.theme = nextTheme;
+
     try {
       localStorage.setItem(storageKey, nextTheme);
     } catch {
-      // Theme switching still works for the current page if storage is unavailable.
+      // The current-page theme still changes if storage is unavailable.
     }
 
-    syncButton();
+    syncButtons();
+  };
+
+  buttons.forEach((button) => {
+    if (button.dataset.themeToggleBound === 'true') return;
+    button.dataset.themeToggleBound = 'true';
+    button.addEventListener('click', toggleTheme);
   });
 
-  syncButton();
+  syncButtons();
 </script>
 
 <style>

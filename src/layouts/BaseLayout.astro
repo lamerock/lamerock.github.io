@@ -1,5 +1,4 @@
 ---
-import Navigation from '../components/layout/Navigation.astro';
 import '../styles/global.css';
 import { profile } from '../data/portfolio';
 
@@ -59,7 +58,7 @@ const structuredData = {
     <meta name="description" content={description} />
     <meta name="author" content={profile.name} />
     <meta name="color-scheme" content="light dark" />
-    <meta name="theme-color" content="#f6f9ff" media="(prefers-color-scheme: light)" />
+    <meta name="theme-color" content="#eef4ff" media="(prefers-color-scheme: light)" />
     <meta name="theme-color" content="#08111f" media="(prefers-color-scheme: dark)" />
 
     <meta property="og:type" content="website" />
@@ -80,7 +79,6 @@ const structuredData = {
   </head>
   <body id="top">
     <a class="skip-link" href="#main-content">Skip to main content</a>
-    <Navigation />
     <main class="site-main" id="main-content">
       <slot />
     </main>
