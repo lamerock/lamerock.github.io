@@ -1,0 +1,318 @@
+---
+import ThemeToggle from './ThemeToggle.astro';
+import { profile } from '../../data/portfolio';
+
+const navItems = [
+  { label: 'About', href: '#about' },
+  { label: 'Experience', href: '#experience' },
+  { label: 'Skills', href: '#skills' },
+  { label: 'Projects', href: '#projects' },
+  { label: 'Credentials', href: '#credentials' },
+  { label: 'Contact', href: '#contact' },
+];
+---
+
+<header class="site-header">
+  <div class="site-container nav-shell">
+    <a class="brand" href="#top" aria-label={`${profile.name} — home`}>
+      <span class="brand-mark" aria-hidden="true">GJ</span>
+      <span class="brand-name">{profile.name}</span>
+    </a>
+
+    <nav class="desktop-nav" aria-label="Primary navigation">
+      <ul>
+        {navItems.map((item) => (
+          <li><a href={item.href}>{item.label}</a></li>
+        ))}
+      </ul>
+    </nav>
+
+    <div class="nav-actions">
+      <a class="nav-social" href={profile.github} target="_blank" rel="noreferrer" aria-label="GitHub profile">GH</a>
+      <a class="nav-social" href={profile.linkedin} target="_blank" rel="noreferrer" aria-label="LinkedIn profile">in</a>
+      <a class="nav-cv" href="/Gerard-James-Paglingayen-CV.pdf" download>Download CV</a>
+      <ThemeToggle />
+      <button
+        class="menu-button"
+        type="button"
+        data-menu-button
+        aria-expanded="false"
+        aria-controls="mobile-navigation"
+      >
+        <span class="menu-button__label">Menu</span>
+        <span class="menu-button__icon" aria-hidden="true"></span>
+      </button>
+    </div>
+  </div>
+
+  <nav class="mobile-nav" id="mobile-navigation" data-mobile-menu aria-label="Mobile navigation" hidden>
+    <div class="site-container">
+      <ul>
+        {navItems.map((item) => (
+          <li><a href={item.href}>{item.label}</a></li>
+        ))}
+      </ul>
+      <div class="mobile-nav__utilities">
+        <a href={profile.github} target="_blank" rel="noreferrer">GitHub</a>
+        <a href={profile.linkedin} target="_blank" rel="noreferrer">LinkedIn</a>
+        <a href="/Gerard-James-Paglingayen-CV.pdf" download>Download CV</a>
+      </div>
+    </div>
+  </nav>
+</header>
+
+<script>
+  const menuButton = document.querySelector<HTMLButtonElement>('[data-menu-button]');
+  const mobileMenu = document.querySelector<HTMLElement>('[data-mobile-menu]');
+
+  const closeMenu = () => {
+    if (!menuButton || !mobileMenu) return;
+    menuButton.setAttribute('aria-expanded', 'false');
+    mobileMenu.hidden = true;
+  };
+
+  menuButton?.addEventListener('click', () => {
+    if (!mobileMenu) return;
+    const isOpen = menuButton.getAttribute('aria-expanded') === 'true';
+    menuButton.setAttribute('aria-expanded', String(!isOpen));
+    mobileMenu.hidden = isOpen;
+  });
+
+  mobileMenu?.querySelectorAll('a').forEach((link) => link.addEventListener('click', closeMenu));
+
+  document.addEventListener('keydown', (event) => {
+    if (event.key === 'Escape') closeMenu();
+  });
+
+  window.addEventListener('resize', () => {
+    if (window.matchMedia('(min-width: 70rem)').matches) closeMenu();
+  });
+</script>
+
+<style>
+  .site-header {
+    position: sticky;
+    z-index: 50;
+    top: 0;
+    border-bottom: 1px solid color-mix(in srgb, var(--color-border) 82%, transparent);
+    background: color-mix(in srgb, var(--color-bg) 88%, transparent);
+    backdrop-filter: blur(16px);
+  }
+
+  .nav-shell {
+    display: flex;
+    min-height: var(--nav-height);
+    align-items: center;
+    justify-content: space-between;
+    gap: 1rem;
+  }
+
+  .brand {
+    display: inline-flex;
+    min-width: 0;
+    align-items: center;
+    gap: 0.75rem;
+    color: var(--color-text);
+    font-weight: 780;
+    text-decoration: none;
+  }
+
+  .brand-mark {
+    display: grid;
+    width: 2.2rem;
+    height: 2.2rem;
+    flex: 0 0 auto;
+    place-items: center;
+    border-radius: 0.65rem;
+    background: var(--color-text);
+    color: var(--color-bg);
+    font-family: var(--font-mono);
+    font-size: 0.78rem;
+    letter-spacing: -0.04em;
+  }
+
+  .brand-name {
+    max-width: 16rem;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+  }
+
+  .desktop-nav {
+    display: none;
+  }
+
+  .desktop-nav ul,
+  .mobile-nav ul {
+    padding: 0;
+    margin: 0;
+    list-style: none;
+  }
+
+  .nav-actions {
+    display: flex;
+    flex: 0 0 auto;
+    align-items: center;
+    gap: 0.45rem;
+  }
+
+  .nav-social,
+  .nav-cv {
+    display: none;
+  }
+
+  .menu-button {
+    display: inline-flex;
+    min-height: 2.6rem;
+    align-items: center;
+    gap: 0.6rem;
+    padding: 0.5rem 0.8rem;
+    border: 1px solid var(--color-border);
+    border-radius: 999px;
+    background: var(--color-surface);
+    cursor: pointer;
+  }
+
+  .menu-button__label {
+    font-size: 0.85rem;
+    font-weight: 700;
+  }
+
+  .menu-button__icon,
+  .menu-button__icon::before,
+  .menu-button__icon::after {
+    display: block;
+    width: 1rem;
+    height: 1px;
+    background: currentColor;
+    content: '';
+  }
+
+  .menu-button__icon {
+    position: relative;
+  }
+
+  .menu-button__icon::before {
+    position: absolute;
+    top: -0.3rem;
+  }
+
+  .menu-button__icon::after {
+    position: absolute;
+    top: 0.3rem;
+  }
+
+  .mobile-nav {
+    border-top: 1px solid var(--color-border);
+    background: var(--color-surface);
+    box-shadow: var(--shadow-md);
+  }
+
+  .mobile-nav ul {
+    display: grid;
+    padding-block: 0.75rem 0.25rem;
+  }
+
+  .mobile-nav a {
+    display: block;
+    padding: 0.78rem 0;
+    color: var(--color-text-muted);
+    font-weight: 650;
+    text-decoration: none;
+  }
+
+  .mobile-nav a:hover {
+    color: var(--color-accent);
+  }
+
+  .mobile-nav__utilities {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.6rem 1rem;
+    padding: 0.7rem 0 1rem;
+    border-top: 1px solid var(--color-border);
+  }
+
+  .mobile-nav__utilities a {
+    padding: 0.25rem 0;
+    color: var(--color-accent);
+    font-size: 0.82rem;
+  }
+
+  @media (min-width: 48rem) {
+    .nav-social,
+    .nav-cv {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      text-decoration: none;
+    }
+
+    .nav-social {
+      width: 2.35rem;
+      height: 2.35rem;
+      border: 1px solid var(--color-border);
+      border-radius: 999px;
+      color: var(--color-text-muted);
+      font-family: var(--font-mono);
+      font-size: 0.72rem;
+      font-weight: 800;
+    }
+
+    .nav-cv {
+      min-height: 2.4rem;
+      padding: 0.45rem 0.72rem;
+      border: 1px solid var(--color-border);
+      border-radius: 999px;
+      background: var(--color-text);
+      color: var(--color-bg);
+      font-size: 0.78rem;
+      font-weight: 760;
+    }
+  }
+
+  @media (min-width: 70rem) {
+    .desktop-nav {
+      display: block;
+      margin-left: auto;
+    }
+
+    .desktop-nav ul {
+      display: flex;
+      align-items: center;
+      gap: 0.1rem;
+    }
+
+    .desktop-nav a {
+      display: inline-flex;
+      padding: 0.55rem 0.58rem;
+      border-radius: 0.5rem;
+      color: var(--color-text-muted);
+      font-size: 0.82rem;
+      font-weight: 650;
+      text-decoration: none;
+    }
+
+    .desktop-nav a:hover {
+      background: var(--color-surface-muted);
+      color: var(--color-text);
+    }
+
+    .menu-button,
+    .mobile-nav {
+      display: none !important;
+    }
+  }
+
+  @media (max-width: 34rem) {
+    .brand-name {
+      max-width: 10.5rem;
+    }
+  }
+
+  @media (max-width: 27rem) {
+    .brand-name {
+      display: none;
+    }
+  }
+</style>

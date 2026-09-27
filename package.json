@@ -1,0 +1,21 @@
+{
+  "name": "lamerock.github.io",
+  "version": "1.0.0",
+  "private": true,
+  "type": "module",
+  "scripts": {
+    "dev": "astro dev",
+    "start": "astro dev",
+    "build": "astro build",
+    "preview": "astro preview",
+    "astro": "astro"
+  },
+  "devDependencies": {
+    "@tailwindcss/vite": "^4.1.0",
+    "astro": "^7.3.5",
+    "tailwindcss": "^4.1.0"
+  },
+  "engines": {
+    "node": ">=22.12.0"
+  }
+}

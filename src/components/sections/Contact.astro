@@ -1,0 +1,102 @@
+---
+import SectionHeading from '../ui/SectionHeading.astro';
+import ExternalIcon from '../ui/ExternalIcon.astro';
+import { profile } from '../../data/portfolio';
+---
+
+<section class="site-section contact-section" id="contact" aria-labelledby="contact-title">
+  <div class="site-container contact">
+    <SectionHeading
+      eyebrow="Get in Touch"
+      title="Contact"
+      id="contact-title"
+      description="For professional inquiries, contact me by email or connect with me on LinkedIn or GitHub."
+    />
+
+    <div class="contact__grid">
+      <div class="contact__message">
+        <p class="contact__availability">{profile.availability}</p>
+        <a class="contact__email" href={`mailto:${profile.email}`}>{profile.email}</a>
+        <p class="contact__location">{profile.location}</p>
+      </div>
+
+      <div class="contact__actions">
+        <a class="button button--primary" href={`mailto:${profile.email}`}>Send Email</a>
+        <a class="button button--secondary" href={profile.linkedin} target="_blank" rel="noreferrer">
+          LinkedIn <ExternalIcon />
+        </a>
+        <a class="button button--secondary" href={profile.github} target="_blank" rel="noreferrer">
+          GitHub <ExternalIcon />
+        </a>
+        <a class="button button--ghost" href="/Gerard-James-Paglingayen-CV.pdf" download>Download CV</a>
+      </div>
+    </div>
+  </div>
+</section>
+
+<style>
+  .contact-section {
+    background:
+      radial-gradient(circle at 15% 20%, color-mix(in srgb, var(--color-accent) 12%, transparent), transparent 24rem),
+      var(--color-bg);
+  }
+
+  .contact__grid {
+    display: grid;
+    gap: 2rem;
+    padding: clamp(1.5rem, 5vw, 3rem);
+    border: 1px solid var(--color-border);
+    border-radius: var(--radius-lg);
+    background: var(--color-surface);
+    box-shadow: var(--shadow-md);
+  }
+
+  .contact__availability {
+    max-width: 36rem;
+    margin-bottom: 1.1rem;
+    font-size: clamp(1.25rem, 3vw, 2rem);
+    font-weight: 760;
+    letter-spacing: -0.03em;
+    line-height: 1.25;
+  }
+
+  .contact__email {
+    display: inline-block;
+    max-width: 100%;
+    color: var(--color-accent);
+    font-size: clamp(1rem, 2.5vw, 1.25rem);
+    font-weight: 720;
+    overflow-wrap: anywhere;
+    text-underline-offset: 0.2em;
+  }
+
+  .contact__location {
+    margin: 0.55rem 0 0;
+    color: var(--color-text-muted);
+  }
+
+  .contact__actions {
+    display: flex;
+    flex-wrap: wrap;
+    align-content: start;
+    gap: 0.65rem;
+  }
+
+
+  @media (min-width: 58rem) {
+    .contact__grid {
+      grid-template-columns: minmax(0, 1.2fr) minmax(18rem, 0.8fr);
+      align-items: center;
+    }
+
+    .contact__actions {
+      justify-content: flex-end;
+    }
+  }
+
+  @media (max-width: 36rem) {
+    .contact__actions .button {
+      width: 100%;
+    }
+  }
+</style>

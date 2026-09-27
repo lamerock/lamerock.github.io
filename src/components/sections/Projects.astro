@@ -1,0 +1,348 @@
+---
+import SectionHeading from '../ui/SectionHeading.astro';
+import ExternalIcon from '../ui/ExternalIcon.astro';
+import { projects, research } from '../../data/portfolio';
+---
+
+<section class="site-section" id="projects" aria-labelledby="projects-title">
+  <div class="site-container">
+    <SectionHeading
+      eyebrow="Selected Work"
+      title="Featured Projects"
+      id="projects-title"
+      description="Selected commissioned development work spanning secure web applications, mobile machine learning, IoT integration, and embedded process automation."
+    />
+
+    <div class="projects-list">
+      {projects.map((project, index) => (
+        <article class:list={['project-card', index % 2 === 1 && 'project-card--reverse']}>
+          <div class="project-card__media">
+            <img src={project.image} alt={project.imageAlt} width="1200" height="800" loading="lazy" />
+            <div class="project-card__media-label">Project media placeholder</div>
+          </div>
+
+          <div class="project-card__content">
+            <div class="project-card__topline">
+              <span>{project.year}</span>
+              <span>{project.role}</span>
+            </div>
+            <h3>{project.title}</h3>
+            <p>{project.description}</p>
+
+            <div class="project-card__detail">
+              <strong>Contribution</strong>
+              <p>{project.contribution}</p>
+            </div>
+
+            <ul class="tag-list" aria-label={`Technologies used in ${project.title}`}>
+              {project.technologies.map((technology) => <li>{technology}</li>)}
+            </ul>
+
+            <div class="project-card__outcome">
+              <span>Impact</span>
+              <p>{project.outcome}</p>
+            </div>
+
+            <div class="project-card__video-placeholder" aria-label="Demo video placeholder">
+              <span aria-hidden="true">▶</span>
+              <div>
+                <strong>Demo video placeholder</strong>
+                <p>Replace with an approved project walkthrough or prototype video.</p>
+              </div>
+            </div>
+
+            <div class="project-card__actions" aria-label={`${project.title} links`}>
+              {project.repositoryUrl ? (
+                <a href={project.repositoryUrl} target="_blank" rel="noreferrer">
+                  GitHub Repository <ExternalIcon />
+                </a>
+              ) : (
+                <span class="pending-link" aria-disabled="true">Repository link pending</span>
+              )}
+              {project.demoUrl ? (
+                <a href={project.demoUrl} target="_blank" rel="noreferrer">
+                  Live Demo <ExternalIcon />
+                </a>
+              ) : (
+                <span class="pending-link" aria-disabled="true">Live demo link pending</span>
+              )}
+              {project.videoUrl ? (
+                <a href={project.videoUrl} target="_blank" rel="noreferrer">
+                  Demo Video <ExternalIcon />
+                </a>
+              ) : (
+                <span class="pending-link" aria-disabled="true">Demo video pending</span>
+              )}
+            </div>
+          </div>
+        </article>
+      ))}
+    </div>
+
+    <div class="research" aria-labelledby="research-title">
+      <SectionHeading
+        eyebrow="Research & Innovation"
+        title="Publications & Intellectual Property"
+        description="Selected research and intellectual-property work documented in the CV. Public links remain placeholders until verified URLs are supplied."
+      />
+
+      <div class="research-grid">
+        {research.map((item) => (
+          <article class="research-card">
+            <div class="research-card__meta">
+              <span>{item.publication}</span>
+              <span>{item.date}</span>
+            </div>
+            <h3>{item.title}</h3>
+            <p>{item.detail}</p>
+            <div class="research-card__footer">
+              <code>{item.reference}</code>
+              {item.url ? (
+                <a href={item.url} target="_blank" rel="noreferrer">Open publication <ExternalIcon /></a>
+              ) : (
+                <span class="pending-link" aria-disabled="true">Public link pending</span>
+              )}
+            </div>
+          </article>
+        ))}
+      </div>
+    </div>
+  </div>
+</section>
+
+<style>
+  .projects-list {
+    display: grid;
+    gap: clamp(3rem, 7vw, 6rem);
+  }
+
+  .project-card {
+    display: grid;
+    align-items: center;
+    gap: clamp(2rem, 5vw, 4rem);
+  }
+
+  .project-card__media {
+    position: relative;
+    overflow: hidden;
+    border: 1px solid var(--color-border);
+    border-radius: var(--radius-lg);
+    background: var(--color-surface-muted);
+    box-shadow: var(--shadow-md);
+  }
+
+  .project-card__media img {
+    width: 100%;
+    aspect-ratio: 3 / 2;
+    object-fit: cover;
+  }
+
+  .project-card__media-label {
+    position: absolute;
+    right: 0.8rem;
+    bottom: 0.8rem;
+    padding: 0.38rem 0.58rem;
+    border: 1px solid rgb(255 255 255 / 0.16);
+    border-radius: 999px;
+    background: rgb(8 17 31 / 0.78);
+    color: #f8fafc;
+    font-family: var(--font-mono);
+    font-size: 0.68rem;
+    backdrop-filter: blur(10px);
+  }
+
+  .project-card__topline {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.5rem 1rem;
+    margin-bottom: 0.85rem;
+    color: var(--color-accent);
+    font-family: var(--font-mono);
+    font-size: 0.74rem;
+    font-weight: 700;
+  }
+
+  .project-card h3 {
+    margin-bottom: 1rem;
+    font-size: clamp(1.75rem, 4vw, 3rem);
+    letter-spacing: -0.04em;
+  }
+
+  .project-card__content > p,
+  .project-card__detail p,
+  .project-card__outcome p,
+  .research-card p {
+    color: var(--color-text-muted);
+  }
+
+  .project-card__detail {
+    margin-block: 1.35rem;
+    padding-left: 1rem;
+    border-left: 2px solid var(--color-accent);
+  }
+
+  .project-card__detail strong,
+  .project-card__outcome span {
+    display: block;
+    margin-bottom: 0.35rem;
+    font-size: 0.82rem;
+    letter-spacing: 0.06em;
+    text-transform: uppercase;
+  }
+
+  .project-card__detail p,
+  .project-card__outcome p {
+    margin: 0;
+  }
+
+  .project-card__outcome {
+    margin-top: 1.3rem;
+    padding: 1rem;
+    border: 1px dashed var(--color-border);
+    border-radius: var(--radius-sm);
+    background: var(--color-surface-muted);
+  }
+
+  .project-card__video-placeholder {
+    display: flex;
+    gap: 0.85rem;
+    align-items: center;
+    margin-top: 1rem;
+    padding: 0.85rem 1rem;
+    border: 1px dashed var(--color-border);
+    border-radius: var(--radius-sm);
+    color: var(--color-text-muted);
+  }
+
+  .project-card__video-placeholder > span {
+    display: grid;
+    width: 2.25rem;
+    height: 2.25rem;
+    flex: 0 0 auto;
+    place-items: center;
+    border-radius: 999px;
+    background: var(--color-surface-muted);
+    color: var(--color-accent);
+  }
+
+  .project-card__video-placeholder strong {
+    display: block;
+    color: var(--color-text);
+    font-size: 0.82rem;
+  }
+
+  .project-card__video-placeholder p {
+    margin: 0.15rem 0 0;
+    color: var(--color-text-muted);
+    font-size: 0.76rem;
+  }
+
+  .project-card__actions {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.7rem;
+    margin-top: 1.25rem;
+  }
+
+  .project-card__actions a,
+  .research-card__footer a,
+  .pending-link {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.35rem;
+    padding: 0.55rem 0.72rem;
+    border-radius: 0.55rem;
+    font-size: 0.8rem;
+    font-weight: 700;
+  }
+
+  .project-card__actions a,
+  .research-card__footer a {
+    color: var(--color-accent);
+    text-decoration: none;
+  }
+
+  .project-card__actions a:hover,
+  .research-card__footer a:hover {
+    background: var(--color-surface-muted);
+  }
+
+  .pending-link {
+    border: 1px dashed var(--color-border);
+    color: var(--color-text-muted);
+    cursor: not-allowed;
+  }
+
+  .research {
+    margin-top: clamp(5rem, 10vw, 8rem);
+    padding-top: clamp(3rem, 7vw, 5rem);
+    border-top: 1px solid var(--color-border);
+  }
+
+  .research-grid {
+    display: grid;
+    gap: 1rem;
+  }
+
+  .research-card {
+    display: flex;
+    min-height: 100%;
+    flex-direction: column;
+    padding: 1.4rem;
+    border: 1px solid var(--color-border);
+    border-radius: var(--radius-md);
+    background: var(--color-surface);
+  }
+
+  .research-card__meta {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: space-between;
+    gap: 0.5rem;
+    margin-bottom: 1rem;
+    color: var(--color-accent);
+    font-family: var(--font-mono);
+    font-size: 0.68rem;
+    font-weight: 700;
+  }
+
+  .research-card h3 {
+    margin-bottom: 0.8rem;
+    font-size: 1.15rem;
+    letter-spacing: -0.02em;
+  }
+
+  .research-card__footer {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    justify-content: space-between;
+    gap: 0.75rem;
+    margin-top: auto;
+    padding-top: 1rem;
+  }
+
+  .research-card code {
+    color: var(--color-text-muted);
+    font-family: var(--font-mono);
+    font-size: 0.72rem;
+  }
+
+  @media (min-width: 60rem) {
+    .project-card {
+      grid-template-columns: minmax(0, 1.08fr) minmax(0, 0.92fr);
+    }
+
+    .project-card--reverse .project-card__media {
+      order: 2;
+    }
+
+    .project-card--reverse .project-card__content {
+      order: 1;
+    }
+
+    .research-grid {
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+    }
+  }
+</style>
