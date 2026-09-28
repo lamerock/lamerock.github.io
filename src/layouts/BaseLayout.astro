@@ -8,8 +8,8 @@ interface Props {
 }
 
 const {
-  title = `${profile.name} | Cybersecurity & Full-Stack`,
-  description = 'Portfolio of Gerard James Paglingayen — cybersecurity, full-stack development, data privacy, AI/IoT systems, and technology project delivery.',
+  title = `${profile.name} | Cybersecurity & Software`,
+  description = 'Portfolio of Gerard James Paglingayen — cybersecurity, full-stack and software development, data privacy, AI/IoT systems, and IT project delivery.',
 } = Astro.props;
 
 const canonicalUrl = new URL(Astro.url.pathname, Astro.site);
@@ -26,10 +26,13 @@ const structuredData = {
   knowsAbout: [
     'Cybersecurity',
     'Full-Stack Development',
+    'Software Development',
     'Data Privacy',
     'Application Security',
     'Machine Learning',
     'Internet of Things',
+    'Information Systems',
+    'IT Operations',
     'IT Project Delivery',
   ],
   address: {
@@ -80,13 +83,13 @@ const structuredData = {
     <meta property="og:image" content={ogImageUrl} />
     <meta property="og:image:width" content="1200" />
     <meta property="og:image:height" content="630" />
-    <meta property="og:image:alt" content="Gerard James Paglingayen — Cybersecurity and Full-Stack Technology Portfolio" />
+    <meta property="og:image:alt" content="Gerard James Paglingayen — Cybersecurity, Software Development, and IT Project Delivery Portfolio" />
 
     <meta name="twitter:card" content="summary_large_image" />
     <meta name="twitter:title" content={title} />
     <meta name="twitter:description" content={description} />
     <meta name="twitter:image" content={ogImageUrl} />
-    <meta name="twitter:image:alt" content="Gerard James Paglingayen — Cybersecurity and Full-Stack Technology Portfolio" />
+    <meta name="twitter:image:alt" content="Gerard James Paglingayen — Cybersecurity, Software Development, and IT Project Delivery Portfolio" />
 
     <link rel="canonical" href={canonicalUrl} />
     <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
