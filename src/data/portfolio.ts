@@ -5,6 +5,7 @@ import dryingSystemImage from '../assets/projects/drying-system-placeholder.svg'
 export const profile = {
   name: 'Gerard James Paglingayen',
   role: 'Cybersecurity · Full-Stack & Software Development · IT Project Delivery',
+  valueProposition: 'Building secure software, connected systems, and practical technology solutions.',
   eyebrow: 'Cybersecurity · Full-Stack & Software Development · IT Project Delivery',
   lead:
     'I work across cybersecurity, data privacy, full-stack and software development, information systems, IT operations, and technology project delivery.',
